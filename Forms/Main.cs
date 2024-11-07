@@ -1,4 +1,4 @@
-namespace VideoConverter;
+namespace VideoConverter.Forms;
 
 public partial class Main : Form {
 
