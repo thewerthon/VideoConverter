@@ -1,4 +1,4 @@
-﻿namespace VideoConverter;
+﻿namespace VideoConverter.Forms;
 
 partial class Main {
 	/// <summary>
@@ -26,12 +26,12 @@ partial class Main {
 	private void InitializeComponent() {
 		SuspendLayout();
 		// 
-		// Form1
+		// Main
 		// 
 		AutoScaleDimensions = new SizeF(7F, 15F);
 		AutoScaleMode = AutoScaleMode.Font;
 		ClientSize = new Size(784, 561);
-		Name = "Form1";
+		Name = "Main";
 		StartPosition = FormStartPosition.CenterScreen;
 		Text = "Main";
 		ResumeLayout(false);
