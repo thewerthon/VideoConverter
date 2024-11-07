@@ -23,6 +23,13 @@ internal static class Bindings {
 
 	}
 
+	public static void AddCheckBoxBinding(CheckBox control, object source, string member, DataSourceUpdateMode mode = DataSourceUpdateMode.OnPropertyChanged) {
+
+		var binding = new Binding("Checked", source, member, true, mode);
+		control.DataBindings.Add(binding);
+
+	}
+
 	public static void AddComboBoxBinding(ComboBox control, object source, string member, DataSourceUpdateMode mode = DataSourceUpdateMode.OnPropertyChanged) {
 
 		var prop = control.DataSource == null ? "Text" : "SelectedValue";

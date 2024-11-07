@@ -7,13 +7,13 @@ public partial class Options : Form {
 	public Options() {
 
 		InitializeComponent();
-		LoadSettings();
+		LoadFromDatabase();
 
 	}
 
 	private void Options_Save_Click(object sender, EventArgs e) {
 
-		SaveSettings();
+		SaveToDatabase();
 
 	}
 

@@ -9,15 +9,17 @@ public class DatabaseContext : DbContext {
 
 	protected override void OnConfiguring(DbContextOptionsBuilder options) {
 
+		base.OnConfiguring(options);
 		options.UseSqlite($"Data Source={DatabasePath}");
+		options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
 	}
 
-	protected override void OnModelCreating(ModelBuilder modelBuilder) {
+	protected override void OnModelCreating(ModelBuilder model) {
 
-		modelBuilder.Entity<Setting>().OwnsOne(s => s.FFmpeg);
-
-		base.OnModelCreating(modelBuilder);
+		base.OnModelCreating(model);
+		model.Entity<Setting>().OwnsOne(s => s.FilesList);
+		model.Entity<Setting>().OwnsOne(s => s.FFmpeg);
 
 	}
 

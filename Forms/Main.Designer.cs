@@ -28,7 +28,7 @@ partial class Main {
 		Menu_File = new ToolStripMenuItem();
 		Menu_AddFiles = new ToolStripMenuItem();
 		Menu_AddFolder = new ToolStripMenuItem();
-		Menu_ClearList = new ToolStripMenuItem();
+		Menu_ClearFiles = new ToolStripMenuItem();
 		toolStripSeparator1 = new ToolStripSeparator();
 		Menu_Options = new ToolStripMenuItem();
 		toolStripSeparator2 = new ToolStripSeparator();
@@ -47,7 +47,7 @@ partial class Main {
 		ToolBar = new ToolStrip();
 		AddFiles = new ToolStripButton();
 		AddFolder = new ToolStripButton();
-		ClearList = new ToolStripButton();
+		ClearFiles = new ToolStripButton();
 		toolStripSeparator3 = new ToolStripSeparator();
 		SingleEdit = new ToolStripButton();
 		BatchEdit = new ToolStripButton();
@@ -56,11 +56,11 @@ partial class Main {
 		StopProcess = new ToolStripButton();
 		panel2 = new Panel();
 		ListView = new ListView();
-		columnHeader1 = new ColumnHeader();
-		columnHeader2 = new ColumnHeader();
-		columnHeader3 = new ColumnHeader();
-		columnHeader4 = new ColumnHeader();
-		columnHeader5 = new ColumnHeader();
+		ColumnNr = new ColumnHeader();
+		ColumnName = new ColumnHeader();
+		ColumnLocation = new ColumnHeader();
+		ColumnSize = new ColumnHeader();
+		ColumnProgress = new ColumnHeader();
 		AddFilesDialog = new OpenFileDialog();
 		AddFolderDialog = new FolderBrowserDialog();
 		Menu.SuspendLayout();
@@ -78,7 +78,7 @@ partial class Main {
 		// 
 		// Menu_File
 		// 
-		Menu_File.DropDownItems.AddRange(new ToolStripItem[] { Menu_AddFiles, Menu_AddFolder, Menu_ClearList, toolStripSeparator1, Menu_Options, toolStripSeparator2, Menu_Exit });
+		Menu_File.DropDownItems.AddRange(new ToolStripItem[] { Menu_AddFiles, Menu_AddFolder, Menu_ClearFiles, toolStripSeparator1, Menu_Options, toolStripSeparator2, Menu_Exit });
 		Menu_File.Name = "Menu_File";
 		Menu_File.Size = new Size(37, 20);
 		Menu_File.Text = "File";
@@ -87,7 +87,7 @@ partial class Main {
 		// 
 		Menu_AddFiles.Image = Properties.Images.icon_add_16;
 		Menu_AddFiles.Name = "Menu_AddFiles";
-		Menu_AddFiles.Size = new Size(180, 22);
+		Menu_AddFiles.Size = new Size(132, 22);
 		Menu_AddFiles.Text = "Add Files";
 		Menu_AddFiles.Click += AddFiles_Click;
 		// 
@@ -95,44 +95,44 @@ partial class Main {
 		// 
 		Menu_AddFolder.Image = Properties.Images.icon_add_folder_16;
 		Menu_AddFolder.Name = "Menu_AddFolder";
-		Menu_AddFolder.Size = new Size(180, 22);
+		Menu_AddFolder.Size = new Size(132, 22);
 		Menu_AddFolder.Text = "Add Folder";
 		Menu_AddFolder.Click += AddFolder_Click;
 		// 
-		// Menu_ClearList
+		// Menu_ClearFiles
 		// 
-		Menu_ClearList.AccessibleDescription = "";
-		Menu_ClearList.Image = Properties.Images.icon_erase_16;
-		Menu_ClearList.Name = "Menu_ClearList";
-		Menu_ClearList.Size = new Size(180, 22);
-		Menu_ClearList.Text = "Clear List";
-		Menu_ClearList.Click += ClearList_Click;
+		Menu_ClearFiles.AccessibleDescription = "";
+		Menu_ClearFiles.Image = Properties.Images.icon_erase_16;
+		Menu_ClearFiles.Name = "Menu_ClearFiles";
+		Menu_ClearFiles.Size = new Size(132, 22);
+		Menu_ClearFiles.Text = "Clear Files";
+		Menu_ClearFiles.Click += ClearFiles_Click;
 		// 
 		// toolStripSeparator1
 		// 
 		toolStripSeparator1.Name = "toolStripSeparator1";
-		toolStripSeparator1.Size = new Size(177, 6);
+		toolStripSeparator1.Size = new Size(129, 6);
 		// 
 		// Menu_Options
 		// 
 		Menu_Options.AccessibleDescription = "";
 		Menu_Options.Image = Properties.Images.icon_settings_16;
 		Menu_Options.Name = "Menu_Options";
-		Menu_Options.Size = new Size(180, 22);
+		Menu_Options.Size = new Size(132, 22);
 		Menu_Options.Text = "Options";
 		Menu_Options.Click += Menu_Options_Click;
 		// 
 		// toolStripSeparator2
 		// 
 		toolStripSeparator2.Name = "toolStripSeparator2";
-		toolStripSeparator2.Size = new Size(177, 6);
+		toolStripSeparator2.Size = new Size(129, 6);
 		// 
 		// Menu_Exit
 		// 
 		Menu_Exit.AccessibleDescription = "";
 		Menu_Exit.Image = Properties.Images.icon_close_16;
 		Menu_Exit.Name = "Menu_Exit";
-		Menu_Exit.Size = new Size(180, 22);
+		Menu_Exit.Size = new Size(132, 22);
 		Menu_Exit.Text = "Exit";
 		Menu_Exit.Click += Menu_Exit_Click;
 		// 
@@ -219,7 +219,7 @@ partial class Main {
 		// 
 		ToolBar.GripStyle = ToolStripGripStyle.Hidden;
 		ToolBar.ImageScalingSize = new Size(24, 24);
-		ToolBar.Items.AddRange(new ToolStripItem[] { AddFiles, AddFolder, ClearList, toolStripSeparator3, SingleEdit, BatchEdit, toolStripSeparator4, StartProcess, StopProcess });
+		ToolBar.Items.AddRange(new ToolStripItem[] { AddFiles, AddFolder, ClearFiles, toolStripSeparator3, SingleEdit, BatchEdit, toolStripSeparator4, StartProcess, StopProcess });
 		ToolBar.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
 		ToolBar.Location = new Point(0, 25);
 		ToolBar.Name = "ToolBar";
@@ -250,16 +250,16 @@ partial class Main {
 		AddFolder.ToolTipText = "Add Folder";
 		AddFolder.Click += AddFolder_Click;
 		// 
-		// ClearList
+		// ClearFiles
 		// 
-		ClearList.Image = Properties.Images.icon_erase_24;
-		ClearList.ImageTransparentColor = Color.Magenta;
-		ClearList.Margin = new Padding(0, 0, 6, 0);
-		ClearList.Name = "ClearList";
-		ClearList.Size = new Size(86, 28);
-		ClearList.Text = " Clear List";
-		ClearList.ToolTipText = "Clear List";
-		ClearList.Click += ClearList_Click;
+		ClearFiles.Image = Properties.Images.icon_erase_24;
+		ClearFiles.ImageTransparentColor = Color.Magenta;
+		ClearFiles.Margin = new Padding(0, 0, 6, 0);
+		ClearFiles.Name = "ClearFiles";
+		ClearFiles.Size = new Size(91, 28);
+		ClearFiles.Text = " Clear Files";
+		ClearFiles.ToolTipText = "Clear List";
+		ClearFiles.Click += ClearFiles_Click;
 		// 
 		// toolStripSeparator3
 		// 
@@ -326,48 +326,53 @@ partial class Main {
 		// 
 		ListView.AllowDrop = true;
 		ListView.BorderStyle = BorderStyle.None;
-		ListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
+		ListView.Columns.AddRange(new ColumnHeader[] { ColumnNr, ColumnName, ColumnLocation, ColumnSize, ColumnProgress });
 		ListView.Dock = DockStyle.Fill;
+		ListView.FullRowSelect = true;
 		ListView.GridLines = true;
 		ListView.Location = new Point(0, 66);
 		ListView.Margin = new Padding(0, 3, 0, 0);
 		ListView.Name = "ListView";
+		ListView.ShowItemToolTips = true;
 		ListView.Size = new Size(784, 495);
 		ListView.TabIndex = 5;
 		ListView.UseCompatibleStateImageBehavior = false;
 		ListView.View = View.Details;
+		ListView.ColumnClick += ListView_ColumnClick;
 		ListView.DragDrop += ListView_DragDrop;
 		ListView.DragEnter += ListView_DragEnter;
+		ListView.KeyDown += ListView_KeyDown;
 		// 
-		// columnHeader1
+		// ColumnNr
 		// 
-		columnHeader1.Tag = "ID";
-		columnHeader1.Text = "ID";
-		columnHeader1.Width = 50;
+		ColumnNr.Text = " Nr.";
+		ColumnNr.Width = 40;
 		// 
-		// columnHeader2
+		// ColumnName
 		// 
-		columnHeader2.Tag = "Name";
-		columnHeader2.Text = "Name";
-		columnHeader2.Width = 200;
+		ColumnName.Tag = "Name";
+		ColumnName.Text = "Name";
+		ColumnName.Width = 330;
 		// 
-		// columnHeader3
+		// ColumnLocation
 		// 
-		columnHeader3.Tag = "Path";
-		columnHeader3.Text = "Path";
-		columnHeader3.Width = 300;
+		ColumnLocation.Tag = "Location";
+		ColumnLocation.Text = "Location";
+		ColumnLocation.Width = 230;
 		// 
-		// columnHeader4
+		// ColumnSize
 		// 
-		columnHeader4.Tag = "Extension";
-		columnHeader4.Text = "Extension";
-		columnHeader4.Width = 80;
+		ColumnSize.Tag = "Size";
+		ColumnSize.Text = "Size";
+		ColumnSize.TextAlign = HorizontalAlignment.Center;
+		ColumnSize.Width = 80;
 		// 
-		// columnHeader5
+		// ColumnProgress
 		// 
-		columnHeader5.Tag = "Size";
-		columnHeader5.Text = "Size";
-		columnHeader5.Width = 100;
+		ColumnProgress.Tag = "Progress";
+		ColumnProgress.Text = "Progress";
+		ColumnProgress.TextAlign = HorizontalAlignment.Center;
+		ColumnProgress.Width = 80;
 		// 
 		// AddFilesDialog
 		// 
@@ -409,7 +414,7 @@ partial class Main {
 	private ToolStripMenuItem Menu_File;
 	private ToolStripMenuItem Menu_AddFiles;
 	private ToolStripMenuItem Menu_AddFolder;
-	private ToolStripMenuItem Menu_ClearList;
+	private ToolStripMenuItem Menu_ClearFiles;
 	private ToolStripSeparator toolStripSeparator1;
 	private ToolStripMenuItem Menu_Options;
 	private ToolStripSeparator toolStripSeparator2;
@@ -425,7 +430,7 @@ partial class Main {
 	private Panel panel2;
 	private ToolStripButton AddFiles;
 	private ToolStripButton AddFolder;
-	private ToolStripButton ClearList;
+	private ToolStripButton ClearFiles;
 	private ToolStripSeparator toolStripSeparator3;
 	private ToolStripButton SingleEdit;
 	private ToolStripMenuItem editSingleToolStripMenuItem;
@@ -437,11 +442,11 @@ partial class Main {
 	private ToolStripButton StartProcess;
 	private ToolStripButton StopProcess;
 	private ListView ListView;
-	private ColumnHeader columnHeader1;
-	private ColumnHeader columnHeader2;
-	private ColumnHeader columnHeader3;
-	private ColumnHeader columnHeader4;
-	private ColumnHeader columnHeader5;
+	private ColumnHeader ColumnName;
+	private ColumnHeader ColumnLocation;
+	private ColumnHeader ColumnSize;
 	private OpenFileDialog AddFilesDialog;
 	private FolderBrowserDialog AddFolderDialog;
+	private ColumnHeader ColumnNr;
+	private ColumnHeader ColumnProgress;
 }

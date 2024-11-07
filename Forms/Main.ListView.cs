@@ -2,27 +2,84 @@
 
 public partial class Main : Form {
 
-	private void ListItems_Clear() {
+	private long Index = 0;
+	private int SortColumn = -1;
+	private SortOrder SortOrder = SortOrder.Ascending;
+
+	private void ListItems_Load() {
 
 		ListView.Items.Clear();
+		ListView.Groups.Clear();
+
+		PerformLongOperation(() => {
+
+			foreach (var file in FileItemsProvider.FileItems) ListItems_Add(file);
+
+		});
 
 	}
 
-	private void ListItems_Fill() {
+	private void ListItems_Clear() {
 
-		ListItems_Clear();
+		ListView.Items.Clear();
+		ListView.Groups.Clear();
 
-		foreach (var file in FileItemsProvider.FileItems) {
+	}
 
-			var item = new ListViewItem(file.Id.ToString());
-			item.SubItems.Add(file.Name);
-			item.SubItems.Add(file.Path);
-			item.SubItems.Add(file.Extension);
-			item.SubItems.Add(file.Size.ToString());
+	private void ListItems_Add(FileItem file) {
 
-			ListView.Items.Add(item);
+		Index = ListView.Items.Count > 0 ? Index + 1 : 1;
+
+		var item = new ListViewItem(Index.ToString(" 00"));
+		var group = ListView.Groups.Cast<ListViewGroup>().FirstOrDefault(g => g.Name == file.BasePath);
+
+		if (Settings.FilesList.GroupFolders) {
+
+			if (group == null) {
+
+				group = new ListViewGroup(file.BasePath, file.BasePath);
+				ListView.Groups.Add(group);
+
+			}
+
+			item.Group = group;
 
 		}
+
+		item.SubItems.Add(file.Name);
+		item.SubItems.Add(file.BasePath);
+		item.SubItems.Add(file.GetSizeString());
+		item.SubItems.Add(file.GetProgressString(), file.GetProgressColor(), item.BackColor, item.Font);
+
+		item.Tag = file.Path;
+		item.UseItemStyleForSubItems = false;
+
+		ListView.Items.Add(item);
+
+	}
+
+	private void ListItems_Remove(FileItem file) {
+
+		var item = ListView.Items.Cast<ListViewItem>().FirstOrDefault(i => i.Tag?.ToString() == file.Path);
+		if (item != null) ListView.Items.Remove(item);
+
+	}
+
+	private void ListView_ColumnClick(object sender, ColumnClickEventArgs e) {
+
+		if (e.Column == SortColumn) {
+
+			SortOrder = SortOrder == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+
+		} else {
+
+			SortColumn = e.Column;
+			SortOrder = SortOrder.Ascending;
+
+		}
+
+		ListView.ListViewItemSorter = new ListViewItemComparer(e.Column, SortOrder);
+		ListView.Sort();
 
 	}
 
@@ -38,10 +95,64 @@ public partial class Main : Form {
 		var folders = paths?.Where(Directory.Exists).ToArray();
 		var files = paths?.Where(File.Exists).ToArray();
 
-		if (folders != null && folders.Length != 0) FileItemsProvider.AddFolders(folders);
-		if (files != null && files.Length != 0) FileItemsProvider.AddFiles(files);
+		PerformLongOperation(() => {
 
-		ListItems_Fill();
+			if (files != null && files.Length != 0) FileItemsProvider.AddFiles(files);
+			if (folders != null && folders.Length != 0) FileItemsProvider.AddFolders(folders, true);
+
+		});
+
+	}
+
+	private void ListView_KeyDown(object sender, KeyEventArgs e) {
+
+		if (e.Control && e.KeyCode == Keys.A) {
+
+			PerformLongOperation(() => {
+
+				foreach (ListViewItem item in ListView.Items) item.Selected = true;
+				e.Handled = true;
+
+			});
+
+		}
+
+		if (e.KeyCode == Keys.Delete) {
+
+			if (ListView.SelectedItems.Count == ListView.Items.Count) {
+
+				PerformLongOperation(FileItemsProvider.ClearFiles);
+
+			} else {
+
+				PerformLongOperation(() => {
+
+					var paths = ListView.SelectedItems.Cast<ListViewItem>().Select(item => item.Tag as string).Where(path => path != null).Select(path => path!).ToArray();
+					FileItemsProvider.RemoveFiles(paths);
+
+				});
+
+			}
+
+		}
+
+	}
+
+	private void PerformLongOperation(Action action) {
+
+		ListView.BeginUpdate();
+		Cursor.Current = Cursors.WaitCursor;
+
+		try {
+
+			action();
+
+		} finally {
+
+			Cursor.Current = Cursors.Default;
+			ListView.EndUpdate();
+
+		}
 
 	}
 

@@ -2,7 +2,7 @@
 
 public partial class Options : Form {
 
-	private void LoadSettings() {
+	private void LoadFromDatabase() {
 
 		// Load
 		Settings.LoadFromDatabase();
@@ -23,6 +23,9 @@ public partial class Options : Form {
 		Bindings.AddComboBoxBinding(Language, DataSource, "Language");
 		Bindings.AddComboBoxBinding(FFmpegLogLevel, DataSource, "FFmpeg.LogLevel");
 
+		// CheckBox Bindings
+		Bindings.AddCheckBoxBinding(GroupFolders, DataSource, "FilesList.GroupFolders");
+
 		// RadioGroup Bindings
 		Bindings.AddRadioGrouxBinding(FFmpegMode, DataSource, "FFmpeg.Mode");
 
@@ -32,7 +35,7 @@ public partial class Options : Form {
 
 	}
 
-	private void SaveSettings() {
+	private void SaveToDatabase() {
 
 		try {
 

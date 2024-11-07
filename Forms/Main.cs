@@ -7,7 +7,12 @@ public partial class Main : Form {
 	public Main() {
 
 		InitializeComponent();
-		FileItemsProvider.FileItemsChanged += ListItems_Fill;
+
+		FileItemsProvider.FileItemsLoaded += ListItems_Load;
+		FileItemsProvider.FileItemsCleared += ListItems_Clear;
+		FileItemsProvider.FileItemAdded += ListItems_Add;
+		FileItemsProvider.FileItemRemoved += ListItems_Remove;
+		FileItemsProvider.LoadFromDatabase();
 
 	}
 
