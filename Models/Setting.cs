@@ -11,8 +11,8 @@ public class Setting {
 	public string Extensions { get; set; } = ".avi .mkv .mov .mp4 .mpeg .mpg .ts .vob .webm .wmv";
 
 	// Complexes
-	public FilesList FilesList { get; set; } = new();
-	public FFmpeg FFmpeg { get; set; } = new();
+	public Setting_FilesList FilesList { get; set; } = new();
+	public Setting_FFmpeg FFmpeg { get; set; } = new();
 
 	public void Validate() {
 
@@ -59,13 +59,13 @@ public class Setting {
 
 }
 
-public class FilesList {
+public class Setting_FilesList {
 
 	public bool GroupFolders { get; set; } = false;
 
 }
 
-public class FFmpeg {
+public class Setting_FFmpeg {
 
 	public int Mode { get; set; } = 0;
 	public string Path { get; set; } = string.Empty;

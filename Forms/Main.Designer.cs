@@ -24,6 +24,7 @@ partial class Main {
 	///  the contents of this method with the code editor.
 	/// </summary>
 	private void InitializeComponent() {
+		components = new System.ComponentModel.Container();
 		Menu = new MenuStrip();
 		Menu_File = new ToolStripMenuItem();
 		Menu_AddFiles = new ToolStripMenuItem();
@@ -63,8 +64,11 @@ partial class Main {
 		ColumnProgress = new ColumnHeader();
 		AddFilesDialog = new OpenFileDialog();
 		AddFolderDialog = new FolderBrowserDialog();
+		ContextMenu = new ContextMenuStrip(components);
+		playToolStripMenuItem = new ToolStripMenuItem();
 		Menu.SuspendLayout();
 		ToolBar.SuspendLayout();
+		ContextMenu.SuspendLayout();
 		SuspendLayout();
 		// 
 		// Menu
@@ -327,6 +331,7 @@ partial class Main {
 		ListView.AllowDrop = true;
 		ListView.BorderStyle = BorderStyle.None;
 		ListView.Columns.AddRange(new ColumnHeader[] { ColumnNr, ColumnName, ColumnLocation, ColumnSize, ColumnProgress });
+		ListView.ContextMenuStrip = ContextMenu;
 		ListView.Dock = DockStyle.Fill;
 		ListView.FullRowSelect = true;
 		ListView.GridLines = true;
@@ -385,6 +390,18 @@ partial class Main {
 		AddFolderDialog.ShowNewFolderButton = false;
 		AddFolderDialog.UseDescriptionForTitle = true;
 		// 
+		// ContextMenu
+		// 
+		ContextMenu.Items.AddRange(new ToolStripItem[] { playToolStripMenuItem });
+		ContextMenu.Name = "ContextMenu";
+		ContextMenu.Size = new Size(181, 48);
+		// 
+		// playToolStripMenuItem
+		// 
+		playToolStripMenuItem.Name = "playToolStripMenuItem";
+		playToolStripMenuItem.Size = new Size(180, 22);
+		playToolStripMenuItem.Text = "Play";
+		// 
 		// Main
 		// 
 		AutoScaleDimensions = new SizeF(7F, 15F);
@@ -404,6 +421,7 @@ partial class Main {
 		Menu.PerformLayout();
 		ToolBar.ResumeLayout(false);
 		ToolBar.PerformLayout();
+		ContextMenu.ResumeLayout(false);
 		ResumeLayout(false);
 		PerformLayout();
 	}
@@ -449,4 +467,6 @@ partial class Main {
 	private FolderBrowserDialog AddFolderDialog;
 	private ColumnHeader ColumnNr;
 	private ColumnHeader ColumnProgress;
+	private ContextMenuStrip ContextMenu;
+	private ToolStripMenuItem playToolStripMenuItem;
 }
