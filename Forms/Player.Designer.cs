@@ -26,19 +26,22 @@ partial class Player {
 	private void InitializeComponent() {
 		VideoPlayer = new LibVLCSharp.WinForms.VideoView();
 		panel1 = new Panel();
+		trackBar1 = new TrackBar();
 		((System.ComponentModel.ISupportInitialize)VideoPlayer).BeginInit();
 		panel1.SuspendLayout();
+		((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
 		SuspendLayout();
 		// 
 		// VideoPlayer
 		// 
 		VideoPlayer.BackColor = Color.Black;
+		VideoPlayer.Dock = DockStyle.Fill;
 		VideoPlayer.Enabled = false;
-		VideoPlayer.Location = new Point(28, 21);
+		VideoPlayer.Location = new Point(0, 0);
 		VideoPlayer.MediaPlayer = null;
 		VideoPlayer.MinimumSize = new Size(320, 180);
 		VideoPlayer.Name = "VideoPlayer";
-		VideoPlayer.Size = new Size(363, 244);
+		VideoPlayer.Size = new Size(470, 300);
 		VideoPlayer.TabIndex = 0;
 		VideoPlayer.Text = "VideoPlayer";
 		VideoPlayer.Click += VideoPlayer_Click;
@@ -47,17 +50,27 @@ partial class Player {
 		// 
 		panel1.BackColor = Color.Transparent;
 		panel1.Controls.Add(VideoPlayer);
-		panel1.Location = new Point(94, 39);
+		panel1.Location = new Point(51, 12);
 		panel1.Name = "panel1";
-		panel1.Size = new Size(418, 285);
+		panel1.Size = new Size(470, 300);
 		panel1.TabIndex = 1;
 		panel1.Click += VideoPlayer_Click;
+		// 
+		// trackBar1
+		// 
+		trackBar1.Location = new Point(51, 318);
+		trackBar1.Maximum = 100;
+		trackBar1.Name = "trackBar1";
+		trackBar1.Size = new Size(470, 45);
+		trackBar1.TabIndex = 2;
+		trackBar1.Scroll += trackBar1_Scroll;
 		// 
 		// Player
 		// 
 		AutoScaleDimensions = new SizeF(7F, 15F);
 		AutoScaleMode = AutoScaleMode.Font;
 		ClientSize = new Size(624, 391);
+		Controls.Add(trackBar1);
 		Controls.Add(panel1);
 		MinimumSize = new Size(320, 180);
 		Name = "Player";
@@ -65,11 +78,14 @@ partial class Player {
 		Text = "Player";
 		((System.ComponentModel.ISupportInitialize)VideoPlayer).EndInit();
 		panel1.ResumeLayout(false);
+		((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
 		ResumeLayout(false);
+		PerformLayout();
 	}
 
 	#endregion
 
 	private LibVLCSharp.WinForms.VideoView VideoPlayer;
 	private Panel panel1;
+	private TrackBar trackBar1;
 }

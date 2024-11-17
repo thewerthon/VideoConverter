@@ -24,6 +24,8 @@ public partial class Player : Form {
 		if (subtitleStreamIndex is not null) Media.AddOption($":sub-track={subtitleStreamIndex}");
 
 		VideoPlayer.MediaPlayer = MediaPlayer;
+
+		MediaPlayer.PositionChanged += VideoPlayer_Progress;
 		MediaPlayer.Play(Media);
 
 	}
@@ -34,6 +36,16 @@ public partial class Player : Form {
 		LibVLC?.Dispose();
 
 		base.OnFormClosed(e);
+
+	}
+
+	private void VideoPlayer_Progress(object? sender, MediaPlayerPositionChangedEventArgs e) {
+
+		if (trackBar1.InvokeRequired) {
+			trackBar1.BeginInvoke(new Action(() => trackBar1.Value = (int)(e.Position * 100)));
+		} else {
+			trackBar1.Value = (int)(e.Position * 100);
+		}
 
 	}
 
@@ -63,4 +75,10 @@ public partial class Player : Form {
 
 	}
 
+	private void trackBar1_Scroll(object sender, EventArgs e) {
+
+		var position = (float)(trackBar1.Value / 100);
+		MediaPlayer.Position = position;
+
+	}
 }
