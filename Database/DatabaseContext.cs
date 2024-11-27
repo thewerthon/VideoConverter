@@ -5,7 +5,7 @@ public class DatabaseContext : DbContext {
 	private static readonly string DatabasePath = DatabaseProvider.DatabasePath;
 
 	public DbSet<FileItem> FileItems { get; set; }
-	public DbSet<Setting> Settings { get; set; }
+	public DbSet<Settings> Settings { get; set; }
 
 	protected override void OnConfiguring(DbContextOptionsBuilder options) {
 
@@ -18,8 +18,9 @@ public class DatabaseContext : DbContext {
 	protected override void OnModelCreating(ModelBuilder model) {
 
 		base.OnModelCreating(model);
-		model.Entity<Setting>().OwnsOne(s => s.FilesList);
-		model.Entity<Setting>().OwnsOne(s => s.FFmpeg);
+		model.Entity<Settings>().OwnsOne(s => s.Files);
+		model.Entity<Settings>().OwnsOne(s => s.FFmpeg);
+		model.Entity<Settings>().OwnsOne(s => s.MediaPlayer);
 
 	}
 

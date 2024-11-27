@@ -33,7 +33,7 @@ public partial class Main : Form {
 		var item = new ListViewItem(Index.ToString(" 00"));
 		var group = ListView.Groups.Cast<ListViewGroup>().FirstOrDefault(g => g.Name == file.BasePath);
 
-		if (Settings.FilesList.GroupFolders) {
+		if (Settings.Files.GroupByFolders) {
 
 			if (group == null) {
 

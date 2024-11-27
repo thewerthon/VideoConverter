@@ -10,14 +10,14 @@ using VideoConverter.Database;
 namespace VideoConverter.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20241107002412_v0.0.1")]
+    [Migration("20241119193105_v0.0.1")]
     partial class v001
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
             modelBuilder.Entity("VideoConverter.Models.FileItem", b =>
                 {
@@ -45,6 +45,9 @@ namespace VideoConverter.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<float>("Progress")
+                        .HasColumnType("REAL");
+
                     b.Property<long>("Size")
                         .HasColumnType("INTEGER");
 
@@ -53,7 +56,7 @@ namespace VideoConverter.Migrations
                     b.ToTable("FileItems");
                 });
 
-            modelBuilder.Entity("VideoConverter.Models.Setting", b =>
+            modelBuilder.Entity("VideoConverter.Models.Settings", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,11 +75,11 @@ namespace VideoConverter.Migrations
                     b.ToTable("Settings");
                 });
 
-            modelBuilder.Entity("VideoConverter.Models.Setting", b =>
+            modelBuilder.Entity("VideoConverter.Models.Settings", b =>
                 {
-                    b.OwnsOne("VideoConverter.Models.FFmpeg", "FFmpeg", b1 =>
+                    b.OwnsOne("VideoConverter.Models.Settings_FFmpeg", "FFmpeg", b1 =>
                         {
-                            b1.Property<int>("SettingId")
+                            b1.Property<int>("SettingsId")
                                 .HasColumnType("INTEGER");
 
                             b1.Property<string>("LogLevel")
@@ -93,15 +96,34 @@ namespace VideoConverter.Migrations
                             b1.Property<int>("Threads")
                                 .HasColumnType("INTEGER");
 
-                            b1.HasKey("SettingId");
+                            b1.HasKey("SettingsId");
 
                             b1.ToTable("Settings");
 
                             b1.WithOwner()
-                                .HasForeignKey("SettingId");
+                                .HasForeignKey("SettingsId");
+                        });
+
+                    b.OwnsOne("VideoConverter.Models.Settings_Files", "Files", b1 =>
+                        {
+                            b1.Property<int>("SettingsId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<bool>("GroupByFolders")
+                                .HasColumnType("INTEGER");
+
+                            b1.HasKey("SettingsId");
+
+                            b1.ToTable("Settings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingsId");
                         });
 
                     b.Navigation("FFmpeg")
+                        .IsRequired();
+
+                    b.Navigation("Files")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

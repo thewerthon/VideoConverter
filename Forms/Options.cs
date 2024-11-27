@@ -2,7 +2,7 @@
 
 public partial class Options : Form {
 
-	private readonly Setting Settings = SettingsProvider.Temporary;
+	private readonly Settings Settings = SettingsProvider.Temporary;
 
 	public Options() {
 

@@ -2,7 +2,7 @@
 
 public static class FileItemsProvider {
 
-	private static readonly Setting Settings = SettingsProvider.Current;
+	private static readonly Settings Settings = SettingsProvider.Current;
 	private static readonly DatabaseContext Database = DatabaseProvider.DatabaseContext;
 
 	public static List<FileItem> FileItems { get; set; } = [];

@@ -13,7 +13,7 @@ internal static class Program {
 		Thread.CurrentThread.CurrentUICulture = new CultureInfo(language ?? "en");
 
 		ApplicationConfiguration.Initialize();
-		Application.Run(new Player(@"C:\VirtualBox\20240919_161641.mp4"));
+		Application.Run(new Main());
 
 	}
 

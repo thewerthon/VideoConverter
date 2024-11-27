@@ -62,10 +62,10 @@ partial class Main {
 		ColumnLocation = new ColumnHeader();
 		ColumnSize = new ColumnHeader();
 		ColumnProgress = new ColumnHeader();
+		ContextMenu = new ContextMenuStrip(components);
+		ContextMenuPlay = new ToolStripMenuItem();
 		AddFilesDialog = new OpenFileDialog();
 		AddFolderDialog = new FolderBrowserDialog();
-		ContextMenu = new ContextMenuStrip(components);
-		playToolStripMenuItem = new ToolStripMenuItem();
 		Menu.SuspendLayout();
 		ToolBar.SuspendLayout();
 		ContextMenu.SuspendLayout();
@@ -379,6 +379,19 @@ partial class Main {
 		ColumnProgress.TextAlign = HorizontalAlignment.Center;
 		ColumnProgress.Width = 80;
 		// 
+		// ContextMenu
+		// 
+		ContextMenu.Items.AddRange(new ToolStripItem[] { ContextMenuPlay });
+		ContextMenu.Name = "ContextMenu";
+		ContextMenu.Size = new Size(181, 48);
+		// 
+		// ContextMenuPlay
+		// 
+		ContextMenuPlay.Name = "ContextMenuPlay";
+		ContextMenuPlay.Size = new Size(180, 22);
+		ContextMenuPlay.Text = "Play";
+		ContextMenuPlay.Click += ContextMenuPlay_Click;
+		// 
 		// AddFilesDialog
 		// 
 		AddFilesDialog.Multiselect = true;
@@ -389,18 +402,6 @@ partial class Main {
 		AddFolderDialog.Description = "Add Folder";
 		AddFolderDialog.ShowNewFolderButton = false;
 		AddFolderDialog.UseDescriptionForTitle = true;
-		// 
-		// ContextMenu
-		// 
-		ContextMenu.Items.AddRange(new ToolStripItem[] { playToolStripMenuItem });
-		ContextMenu.Name = "ContextMenu";
-		ContextMenu.Size = new Size(181, 48);
-		// 
-		// playToolStripMenuItem
-		// 
-		playToolStripMenuItem.Name = "playToolStripMenuItem";
-		playToolStripMenuItem.Size = new Size(180, 22);
-		playToolStripMenuItem.Text = "Play";
 		// 
 		// Main
 		// 
@@ -468,5 +469,5 @@ partial class Main {
 	private ColumnHeader ColumnNr;
 	private ColumnHeader ColumnProgress;
 	private ContextMenuStrip ContextMenu;
-	private ToolStripMenuItem playToolStripMenuItem;
+	private ToolStripMenuItem ContextMenuPlay;
 }

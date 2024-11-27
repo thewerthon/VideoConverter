@@ -2,7 +2,7 @@ namespace VideoConverter.Forms;
 
 public partial class Main : Form {
 
-	private readonly Setting Settings = SettingsProvider.Current;
+	private readonly Settings Settings = SettingsProvider.Current;
 
 	public Main() {
 
@@ -13,6 +13,12 @@ public partial class Main : Form {
 		FileItemsProvider.FileItemAdded += ListItems_Add;
 		FileItemsProvider.FileItemRemoved += ListItems_Remove;
 		FileItemsProvider.LoadFromDatabase();
+
+	}
+
+	private void ContextMenuPlay_Click(object sender, EventArgs e) {
+
+		//var path = ListView.SelectedItems[0].Tag?.ToString() ?? string.Empty;
 
 	}
 

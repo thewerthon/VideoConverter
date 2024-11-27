@@ -45,7 +45,7 @@ partial class Options {
 		flowLayoutPanel5 = new FlowLayoutPanel();
 		FFmpegSystem = new RadioButton();
 		FFmpegApplication = new RadioButton();
-		radioButton3 = new RadioButton();
+		FFmpegCustom = new RadioButton();
 		label3 = new Label();
 		FFmpegPath = new TextBox();
 		FFmpegBrowse = new Button();
@@ -58,6 +58,16 @@ partial class Options {
 		flowLayoutPanel7 = new FlowLayoutPanel();
 		label6 = new Label();
 		FFmpegLogLevel = new ComboBox();
+		tabPage1 = new TabPage();
+		flowLayoutPanel9 = new FlowLayoutPanel();
+		MediaPlayerMode = new RadioGroup();
+		flowLayoutPanel10 = new FlowLayoutPanel();
+		MediaPlayerSystem = new RadioButton();
+		MediaPlayerPrograms = new RadioButton();
+		MediaPlayerCustom = new RadioButton();
+		label1 = new Label();
+		MediaPlayerPath = new TextBox();
+		MediaPlayerBrowse = new Button();
 		Options_Save = new Button();
 		Options_Cancel = new Button();
 		DataSource = new BindingSource(components);
@@ -80,6 +90,10 @@ partial class Options {
 		((System.ComponentModel.ISupportInitialize)FFmpegThreads).BeginInit();
 		groupBox4.SuspendLayout();
 		flowLayoutPanel7.SuspendLayout();
+		tabPage1.SuspendLayout();
+		flowLayoutPanel9.SuspendLayout();
+		MediaPlayerMode.SuspendLayout();
+		flowLayoutPanel10.SuspendLayout();
 		((System.ComponentModel.ISupportInitialize)DataSource).BeginInit();
 		SuspendLayout();
 		// 
@@ -87,6 +101,7 @@ partial class Options {
 		// 
 		Options_TabGroup.Controls.Add(Options_General);
 		Options_TabGroup.Controls.Add(Options_FFmpeg);
+		Options_TabGroup.Controls.Add(tabPage1);
 		Options_TabGroup.Location = new Point(12, 12);
 		Options_TabGroup.Name = "Options_TabGroup";
 		Options_TabGroup.SelectedIndex = 0;
@@ -301,7 +316,7 @@ partial class Options {
 		flowLayoutPanel5.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 		flowLayoutPanel5.Controls.Add(FFmpegSystem);
 		flowLayoutPanel5.Controls.Add(FFmpegApplication);
-		flowLayoutPanel5.Controls.Add(radioButton3);
+		flowLayoutPanel5.Controls.Add(FFmpegCustom);
 		flowLayoutPanel5.Controls.Add(label3);
 		flowLayoutPanel5.Controls.Add(FFmpegPath);
 		flowLayoutPanel5.Controls.Add(FFmpegBrowse);
@@ -342,19 +357,19 @@ partial class Options {
 		FFmpegApplication.UseVisualStyleBackColor = true;
 		FFmpegApplication.Click += FFmpegApplication_Click;
 		// 
-		// radioButton3
+		// FFmpegCustom
 		// 
-		radioButton3.AutoSize = true;
-		flowLayoutPanel5.SetFlowBreak(radioButton3, true);
-		radioButton3.Location = new Point(230, 3);
-		radioButton3.MinimumSize = new Size(30, 23);
-		radioButton3.Name = "radioButton3";
-		radioButton3.Padding = new Padding(3, 0, 3, 0);
-		radioButton3.Size = new Size(109, 23);
-		radioButton3.TabIndex = 2;
-		radioButton3.Tag = "2";
-		radioButton3.Text = "Custom Folder";
-		radioButton3.UseVisualStyleBackColor = true;
+		FFmpegCustom.AutoSize = true;
+		flowLayoutPanel5.SetFlowBreak(FFmpegCustom, true);
+		FFmpegCustom.Location = new Point(230, 3);
+		FFmpegCustom.MinimumSize = new Size(30, 23);
+		FFmpegCustom.Name = "FFmpegCustom";
+		FFmpegCustom.Padding = new Padding(3, 0, 3, 0);
+		FFmpegCustom.Size = new Size(109, 23);
+		FFmpegCustom.TabIndex = 2;
+		FFmpegCustom.Tag = "2";
+		FFmpegCustom.Text = "Custom Folder";
+		FFmpegCustom.UseVisualStyleBackColor = true;
 		// 
 		// label3
 		// 
@@ -432,7 +447,7 @@ partial class Options {
 		// 
 		FFmpegThreads.AutoSize = true;
 		FFmpegThreads.Location = new Point(60, 3);
-		FFmpegThreads.Maximum = new decimal(new int[] { 32, 0, 0, 0 });
+		FFmpegThreads.Maximum = new decimal(new int[] { 64, 0, 0, 0 });
 		FFmpegThreads.MinimumSize = new Size(30, 0);
 		FFmpegThreads.Name = "FFmpegThreads";
 		FFmpegThreads.Size = new Size(35, 23);
@@ -503,6 +518,135 @@ partial class Options {
 		FFmpegLogLevel.Size = new Size(100, 23);
 		FFmpegLogLevel.TabIndex = 2;
 		FFmpegLogLevel.ValueMember = "Key";
+		// 
+		// tabPage1
+		// 
+		tabPage1.Controls.Add(flowLayoutPanel9);
+		tabPage1.Location = new Point(4, 24);
+		tabPage1.Name = "tabPage1";
+		tabPage1.Padding = new Padding(3);
+		tabPage1.Size = new Size(554, 380);
+		tabPage1.TabIndex = 2;
+		tabPage1.Text = "Media Player";
+		tabPage1.UseVisualStyleBackColor = true;
+		// 
+		// flowLayoutPanel9
+		// 
+		flowLayoutPanel9.Controls.Add(MediaPlayerMode);
+		flowLayoutPanel9.Dock = DockStyle.Fill;
+		flowLayoutPanel9.FlowDirection = FlowDirection.TopDown;
+		flowLayoutPanel9.Location = new Point(3, 3);
+		flowLayoutPanel9.Name = "flowLayoutPanel9";
+		flowLayoutPanel9.Size = new Size(548, 374);
+		flowLayoutPanel9.TabIndex = 2;
+		// 
+		// MediaPlayerMode
+		// 
+		MediaPlayerMode.AutoSize = true;
+		MediaPlayerMode.Controls.Add(flowLayoutPanel10);
+		MediaPlayerMode.Dock = DockStyle.Top;
+		MediaPlayerMode.Location = new Point(6, 6);
+		MediaPlayerMode.Margin = new Padding(6);
+		MediaPlayerMode.MinimumSize = new Size(534, 63);
+		MediaPlayerMode.Name = "MediaPlayerMode";
+		MediaPlayerMode.Padding = new Padding(6, 6, 6, 12);
+		MediaPlayerMode.Selected = 0;
+		MediaPlayerMode.Size = new Size(534, 92);
+		MediaPlayerMode.TabIndex = 2;
+		MediaPlayerMode.TabStop = false;
+		MediaPlayerMode.Text = "Location";
+		// 
+		// flowLayoutPanel10
+		// 
+		flowLayoutPanel10.AutoSize = true;
+		flowLayoutPanel10.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+		flowLayoutPanel10.Controls.Add(MediaPlayerSystem);
+		flowLayoutPanel10.Controls.Add(MediaPlayerPrograms);
+		flowLayoutPanel10.Controls.Add(MediaPlayerCustom);
+		flowLayoutPanel10.Controls.Add(label1);
+		flowLayoutPanel10.Controls.Add(MediaPlayerPath);
+		flowLayoutPanel10.Controls.Add(MediaPlayerBrowse);
+		flowLayoutPanel10.Dock = DockStyle.Fill;
+		flowLayoutPanel10.Location = new Point(6, 22);
+		flowLayoutPanel10.MinimumSize = new Size(0, 28);
+		flowLayoutPanel10.Name = "flowLayoutPanel10";
+		flowLayoutPanel10.Size = new Size(522, 58);
+		flowLayoutPanel10.TabIndex = 1;
+		// 
+		// MediaPlayerSystem
+		// 
+		MediaPlayerSystem.AutoSize = true;
+		MediaPlayerSystem.Checked = true;
+		MediaPlayerSystem.Location = new Point(3, 3);
+		MediaPlayerSystem.MinimumSize = new Size(30, 23);
+		MediaPlayerSystem.Name = "MediaPlayerSystem";
+		MediaPlayerSystem.Padding = new Padding(3, 0, 3, 0);
+		MediaPlayerSystem.Size = new Size(96, 23);
+		MediaPlayerSystem.TabIndex = 0;
+		MediaPlayerSystem.TabStop = true;
+		MediaPlayerSystem.Tag = "0";
+		MediaPlayerSystem.Text = "System Path";
+		MediaPlayerSystem.UseVisualStyleBackColor = true;
+		MediaPlayerSystem.Click += MediaPlayerSystem_Click;
+		// 
+		// MediaPlayerPrograms
+		// 
+		MediaPlayerPrograms.AutoSize = true;
+		MediaPlayerPrograms.Location = new Point(105, 3);
+		MediaPlayerPrograms.MinimumSize = new Size(30, 23);
+		MediaPlayerPrograms.Name = "MediaPlayerPrograms";
+		MediaPlayerPrograms.Padding = new Padding(3, 0, 3, 0);
+		MediaPlayerPrograms.Size = new Size(103, 23);
+		MediaPlayerPrograms.TabIndex = 1;
+		MediaPlayerPrograms.Tag = "1";
+		MediaPlayerPrograms.Text = "Program Files";
+		MediaPlayerPrograms.UseVisualStyleBackColor = true;
+		MediaPlayerPrograms.Click += MediaPlayerPrograms_Click;
+		// 
+		// MediaPlayerCustom
+		// 
+		MediaPlayerCustom.AutoSize = true;
+		flowLayoutPanel10.SetFlowBreak(MediaPlayerCustom, true);
+		MediaPlayerCustom.Location = new Point(214, 3);
+		MediaPlayerCustom.MinimumSize = new Size(30, 23);
+		MediaPlayerCustom.Name = "MediaPlayerCustom";
+		MediaPlayerCustom.Padding = new Padding(3, 0, 3, 0);
+		MediaPlayerCustom.Size = new Size(109, 23);
+		MediaPlayerCustom.TabIndex = 2;
+		MediaPlayerCustom.Tag = "2";
+		MediaPlayerCustom.Text = "Custom Folder";
+		MediaPlayerCustom.UseVisualStyleBackColor = true;
+		// 
+		// label1
+		// 
+		label1.Anchor = AnchorStyles.Left;
+		label1.AutoSize = true;
+		label1.Location = new Point(3, 32);
+		label1.MinimumSize = new Size(30, 23);
+		label1.Name = "label1";
+		label1.Size = new Size(88, 23);
+		label1.TabIndex = 6;
+		label1.Text = "Custom Folder:";
+		label1.TextAlign = ContentAlignment.MiddleLeft;
+		// 
+		// MediaPlayerPath
+		// 
+		MediaPlayerPath.Location = new Point(97, 32);
+		MediaPlayerPath.MinimumSize = new Size(30, 23);
+		MediaPlayerPath.Name = "MediaPlayerPath";
+		MediaPlayerPath.Size = new Size(339, 23);
+		MediaPlayerPath.TabIndex = 4;
+		// 
+		// MediaPlayerBrowse
+		// 
+		MediaPlayerBrowse.Location = new Point(442, 32);
+		MediaPlayerBrowse.MinimumSize = new Size(30, 23);
+		MediaPlayerBrowse.Name = "MediaPlayerBrowse";
+		MediaPlayerBrowse.Size = new Size(75, 23);
+		MediaPlayerBrowse.TabIndex = 5;
+		MediaPlayerBrowse.Text = "Browse";
+		MediaPlayerBrowse.UseVisualStyleBackColor = true;
+		MediaPlayerBrowse.Click += MediaPlayerBrowse_Click;
 		// 
 		// Options_Save
 		// 
@@ -582,6 +726,13 @@ partial class Options {
 		groupBox4.PerformLayout();
 		flowLayoutPanel7.ResumeLayout(false);
 		flowLayoutPanel7.PerformLayout();
+		tabPage1.ResumeLayout(false);
+		flowLayoutPanel9.ResumeLayout(false);
+		flowLayoutPanel9.PerformLayout();
+		MediaPlayerMode.ResumeLayout(false);
+		MediaPlayerMode.PerformLayout();
+		flowLayoutPanel10.ResumeLayout(false);
+		flowLayoutPanel10.PerformLayout();
 		((System.ComponentModel.ISupportInitialize)DataSource).EndInit();
 		ResumeLayout(false);
 	}
@@ -603,7 +754,7 @@ partial class Options {
 	private FlowLayoutPanel flowLayoutPanel5;
 	private RadioButton FFmpegSystem;
 	private RadioButton FFmpegApplication;
-	private RadioButton radioButton3;
+	private RadioButton FFmpegCustom;
 	private TextBox FFmpegPath;
 	private Button FFmpegBrowse;
 	private ComboBox Language;
@@ -625,4 +776,14 @@ partial class Options {
 	private GroupBox groupBox5;
 	private FlowLayoutPanel flowLayoutPanel8;
 	private CheckBox GroupFolders;
+	private TabPage tabPage1;
+	private FlowLayoutPanel flowLayoutPanel9;
+	private RadioGroup MediaPlayerMode;
+	private FlowLayoutPanel flowLayoutPanel10;
+	private RadioButton MediaPlayerSystem;
+	private RadioButton MediaPlayerPrograms;
+	private RadioButton MediaPlayerCustom;
+	private Label label1;
+	private TextBox MediaPlayerPath;
+	private Button MediaPlayerBrowse;
 }
