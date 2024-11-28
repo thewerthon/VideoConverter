@@ -4,8 +4,8 @@ public class DatabaseContext : DbContext {
 
 	private static readonly string DatabasePath = DatabaseProvider.DatabasePath;
 
-	public required DbSet<FileItem> FileItems { get; set; }
-	public required DbSet<Settings> Settings { get; set; }
+	public DbSet<FileItem> FileItems { get; set; } = null!;
+	public DbSet<Settings> Settings { get; set; } = null!;
 
 	protected override void OnConfiguring(DbContextOptionsBuilder options) {
 
