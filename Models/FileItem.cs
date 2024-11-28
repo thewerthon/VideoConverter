@@ -1,9 +1,8 @@
 ﻿namespace VideoConverter.Models;
 
-public class FileItem(string path) {
+public class FileItem(string path) : DatabaseRecord, IListViewHandlerItem {
 
 	// Generals
-	public int Id { get; set; }
 	public string Name { get; set; } = System.IO.Path.GetFileName(path);
 	public string Path { get; set; } = System.IO.Path.GetFullPath(path);
 	public string BaseName { get; set; } = System.IO.Path.GetFileNameWithoutExtension(path);
@@ -13,6 +12,18 @@ public class FileItem(string path) {
 
 	// Progress
 	public float Progress { get; set; } = 0;
+
+	// List View Item
+	public ListViewItem ToListViewItem() {
+
+		return new ListViewItem() {
+
+			Text = Name,
+			Tag = Id
+
+		};
+
+	}
 
 	public string GetSizeString() {
 

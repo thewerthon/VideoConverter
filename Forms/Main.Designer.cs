@@ -64,6 +64,11 @@ partial class Main {
 		ColumnProgress = new ColumnHeader();
 		ContextMenu = new ContextMenuStrip(components);
 		ContextMenuPlay = new ToolStripMenuItem();
+		ContextMenuPlaySequence = new ToolStripMenuItem();
+		ContextMenuEdit = new ToolStripMenuItem();
+		ContextMenuEditSequence = new ToolStripMenuItem();
+		ContextMenuBatchEdit = new ToolStripMenuItem();
+		ContextMenuLocate = new ToolStripMenuItem();
 		AddFilesDialog = new OpenFileDialog();
 		AddFolderDialog = new FolderBrowserDialog();
 		Menu.SuspendLayout();
@@ -170,7 +175,7 @@ partial class Main {
 		// 
 		// startProcessToolStripMenuItem
 		// 
-		startProcessToolStripMenuItem.Image = Properties.Images.icon_play_16;
+		startProcessToolStripMenuItem.Image = Properties.Images.icon_start_16;
 		startProcessToolStripMenuItem.Name = "startProcessToolStripMenuItem";
 		startProcessToolStripMenuItem.Size = new Size(141, 22);
 		startProcessToolStripMenuItem.Text = "Start Process";
@@ -299,7 +304,7 @@ partial class Main {
 		// 
 		// StartProcess
 		// 
-		StartProcess.Image = Properties.Images.icon_play_24;
+		StartProcess.Image = Properties.Images.icon_start_24;
 		StartProcess.ImageTransparentColor = Color.Magenta;
 		StartProcess.Margin = new Padding(0, 0, 6, 0);
 		StartProcess.Name = "StartProcess";
@@ -344,6 +349,7 @@ partial class Main {
 		ListView.UseCompatibleStateImageBehavior = false;
 		ListView.View = View.Details;
 		ListView.ColumnClick += ListView_ColumnClick;
+		ListView.SelectedIndexChanged += ListView_SelectedIndexChanged;
 		ListView.DragDrop += ListView_DragDrop;
 		ListView.DragEnter += ListView_DragEnter;
 		ListView.KeyDown += ListView_KeyDown;
@@ -381,16 +387,54 @@ partial class Main {
 		// 
 		// ContextMenu
 		// 
-		ContextMenu.Items.AddRange(new ToolStripItem[] { ContextMenuPlay });
+		ContextMenu.Items.AddRange(new ToolStripItem[] { ContextMenuPlay, ContextMenuPlaySequence, ContextMenuEdit, ContextMenuEditSequence, ContextMenuBatchEdit, ContextMenuLocate });
 		ContextMenu.Name = "ContextMenu";
-		ContextMenu.Size = new Size(181, 48);
+		ContextMenu.Size = new Size(164, 136);
+		ContextMenu.Opening += ContextMenu_Opening;
 		// 
 		// ContextMenuPlay
 		// 
+		ContextMenuPlay.Image = Properties.Images.icon_play_16;
 		ContextMenuPlay.Name = "ContextMenuPlay";
-		ContextMenuPlay.Size = new Size(180, 22);
-		ContextMenuPlay.Text = "Play";
+		ContextMenuPlay.Size = new Size(163, 22);
+		ContextMenuPlay.Text = "Play File";
 		ContextMenuPlay.Click += ContextMenuPlay_Click;
+		// 
+		// ContextMenuPlaySequence
+		// 
+		ContextMenuPlaySequence.Image = Properties.Images.icon_play_16;
+		ContextMenuPlaySequence.Name = "ContextMenuPlaySequence";
+		ContextMenuPlaySequence.Size = new Size(163, 22);
+		ContextMenuPlaySequence.Text = "Play in Sequence";
+		// 
+		// ContextMenuEdit
+		// 
+		ContextMenuEdit.Image = Properties.Images.icon_edit_16;
+		ContextMenuEdit.Name = "ContextMenuEdit";
+		ContextMenuEdit.Size = new Size(163, 22);
+		ContextMenuEdit.Text = "Edit Parameters";
+		// 
+		// ContextMenuEditSequence
+		// 
+		ContextMenuEditSequence.Image = Properties.Images.icon_edit_16;
+		ContextMenuEditSequence.Name = "ContextMenuEditSequence";
+		ContextMenuEditSequence.Size = new Size(163, 22);
+		ContextMenuEditSequence.Text = "Edit in Sequence";
+		// 
+		// ContextMenuBatchEdit
+		// 
+		ContextMenuBatchEdit.Image = Properties.Images.icon_form_16;
+		ContextMenuBatchEdit.Name = "ContextMenuBatchEdit";
+		ContextMenuBatchEdit.Size = new Size(163, 22);
+		ContextMenuBatchEdit.Text = "Batch Edit";
+		// 
+		// ContextMenuLocate
+		// 
+		ContextMenuLocate.Image = Properties.Images.icon_folder_16;
+		ContextMenuLocate.Name = "ContextMenuLocate";
+		ContextMenuLocate.Size = new Size(163, 22);
+		ContextMenuLocate.Text = "Open Location";
+		ContextMenuLocate.Click += ContextMenuLocate_Click;
 		// 
 		// AddFilesDialog
 		// 
@@ -470,4 +514,9 @@ partial class Main {
 	private ColumnHeader ColumnProgress;
 	private ContextMenuStrip ContextMenu;
 	private ToolStripMenuItem ContextMenuPlay;
+	private ToolStripMenuItem ContextMenuLocate;
+	private ToolStripMenuItem ContextMenuPlaySequence;
+	private ToolStripMenuItem ContextMenuEdit;
+	private ToolStripMenuItem ContextMenuBatchEdit;
+	private ToolStripMenuItem ContextMenuEditSequence;
 }

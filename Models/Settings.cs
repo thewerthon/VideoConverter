@@ -13,7 +13,7 @@ public class Settings {
 	// Complexes
 	public Settings_Files Files { get; set; } = new();
 	public Settings_FFmpeg FFmpeg { get; set; } = new();
-	public Settings_MediaPlayer MediaPlayer { get; set; } = new();
+	public Settings_FFplay FFplay { get; set; } = new();
 
 	public void Validate() {
 
@@ -21,7 +21,6 @@ public class Settings {
 		ValidateExtensions();
 
 		FFmpeg.Validate();
-		MediaPlayer.Validate();
 
 	}
 
@@ -71,12 +70,14 @@ public class Settings_FFmpeg {
 
 	public int Mode { get; set; } = 0;
 	public string CustomPath { get; set; } = string.Empty;
-	public string FFmpegPath { get; private set; } = string.Empty;
-	public string FFprobePath { get; private set; } = string.Empty;
+	public string EncoderPath { get; private set; } = string.Empty;
+	public string PlayerPath { get; private set; } = string.Empty;
+	public string ProbePath { get; private set; } = string.Empty;
 	public string LogLevel { get; set; } = "error";
 	public int Threads { get; set; } = 0;
 
 	public const string FFMPEG_FILE = "ffmpeg.exe";
+	public const string FFPLAY_FILE = "ffplay.exe";
 	public const string FFPROBE_FILE = "ffprobe.exe";
 
 	public void Validate() {
@@ -100,19 +101,22 @@ public class Settings_FFmpeg {
 		switch (Mode) {
 
 			case 0: // System Path
-				FFmpegPath = FileUtils.GetFilePathInSystemPath(FFMPEG_FILE);
-				FFprobePath = FileUtils.GetFilePathInSystemPath(FFPROBE_FILE);
+				EncoderPath = FileUtils.GetFilePathInSystemPath(FFMPEG_FILE);
+				PlayerPath = FileUtils.GetFilePathInSystemPath(FFPLAY_FILE);
+				ProbePath = FileUtils.GetFilePathInSystemPath(FFPROBE_FILE);
 				break;
 
 			case 1: // Application Path
-				FFmpegPath = FileUtils.GetFilePathInApplicationPath(FFMPEG_FILE);
-				FFprobePath = FileUtils.GetFilePathInApplicationPath(FFPROBE_FILE);
+				EncoderPath = FileUtils.GetFilePathInApplicationPath(FFMPEG_FILE);
+				PlayerPath = FileUtils.GetFilePathInApplicationPath(FFPLAY_FILE);
+				ProbePath = FileUtils.GetFilePathInApplicationPath(FFPROBE_FILE);
 				break;
 
 			case 2: // Custom Path
 				CustomPath = FileUtils.GetCustomPath(CustomPath);
-				FFmpegPath = FileUtils.GetFilePathInCustomPath(CustomPath, FFMPEG_FILE);
-				FFprobePath = FileUtils.GetFilePathInCustomPath(CustomPath, FFPROBE_FILE);
+				EncoderPath = FileUtils.GetFilePathInCustomPath(CustomPath, FFMPEG_FILE);
+				PlayerPath = FileUtils.GetFilePathInCustomPath(CustomPath, FFPLAY_FILE);
+				ProbePath = FileUtils.GetFilePathInCustomPath(CustomPath, FFPROBE_FILE);
 				break;
 
 			default:
@@ -138,49 +142,37 @@ public class Settings_FFmpeg {
 
 }
 
-public class Settings_MediaPlayer {
+public class Settings_FFplay {
 
-	public int Mode { get; set; } = 0;
-	public string CustomPath { get; set; } = string.Empty;
-	public string MediaPlayerPath { get; private set; } = string.Empty;
-
-	public const string MEDIAPLAYER_FILE = "mpc-hc64.exe";
+	public string WindowSize { get; set; } = "640x480";
+	public bool Fullscreen { get; set; } = false;
+	public int Volume { get; set; } = 100;
 
 	public void Validate() {
 
-		ValidateMode();
-		ValidatePath();
+		ValidateWindowSize();
+		ValidateVolume();
 
 	}
 
-	public void ValidateMode() {
+	public void ValidateWindowSize() {
 
-		if (Mode is < 0 or > 2)
-			throw new ValidationException("Media Player mode must be between 0 and 2.");
+		if (!RegExesProvider.WindowSizeFormat().IsMatch(WindowSize))
+			throw new ValidationException("FFplay window size must be in the format WIDTHxHEIGHT (e.g., 640x480).");
+
+		var match = RegExesProvider.WindowSizeFormat().Match(WindowSize);
+		var width = int.Parse(match.Groups["width"].Value);
+		var height = int.Parse(match.Groups["height"].Value);
+
+		if (width is < 60 or > 7680 || height is < 60 or > 7680)
+			throw new ValidationException("FFplay width and height must be between 60 and 7680.");
 
 	}
 
-	public void ValidatePath() {
+	public void ValidateVolume() {
 
-		switch (Mode) {
-
-			case 0: // System Path
-				MediaPlayerPath = FileUtils.GetFilePathInSystemPath(MEDIAPLAYER_FILE);
-				break;
-
-			case 1: // ProgramFiles Path
-				MediaPlayerPath = FileUtils.GetFilePathInProgramFilesPath($@"K-Lite Codec Pack\MPC-HC64\{MEDIAPLAYER_FILE}");
-				break;
-
-			case 2: // Custom Path
-				CustomPath = FileUtils.GetCustomPath(CustomPath);
-				MediaPlayerPath = FileUtils.GetFilePathInCustomPath(CustomPath, MEDIAPLAYER_FILE);
-				break;
-
-			default:
-				throw new ValidationException("Invalid Media Player mode.");
-
-		}
+		if (Volume is < 0 or > 100)
+			throw new ValidationException("FFplay volume must be between 0 and 100.");
 
 	}
 

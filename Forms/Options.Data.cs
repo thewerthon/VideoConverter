@@ -11,31 +11,31 @@ public partial class Options : Form {
 		// ComboBox Sources
 		Language.DataSource = ListItemsProvider.Languages;
 		FFmpegLogLevel.DataSource = ListItemsProvider.LogLevels;
+		FFplayWindowSize.DataSource = ListItemsProvider.WindowSizes;
 
 		// TextBox Bindings
 		Bindings.AddTextBoxBinding(Extensions, DataSource, "Extensions");
 		Bindings.AddTextBoxBinding(FFmpegPath, DataSource, "FFmpeg.CustomPath");
-		Bindings.AddTextBoxBinding(MediaPlayerPath, DataSource, "MediaPlayer.CustomPath");
 
 		// NumberBox Bindings
 		Bindings.AddNumberBoxBinding(FFmpegThreads, DataSource, "FFmpeg.Threads");
+		Bindings.AddNumberBoxBinding(FFplayVolume, DataSource, "FFplay.Volume");
 
 		// ComboBox Bindings
 		Bindings.AddComboBoxBinding(Language, DataSource, "Language");
 		Bindings.AddComboBoxBinding(FFmpegLogLevel, DataSource, "FFmpeg.LogLevel");
+		Bindings.AddComboBoxBinding(FFplayWindowSize, DataSource, "FFplay.WindowSize");
 
 		// CheckBox Bindings
-		Bindings.AddCheckBoxBinding(GroupFolders, DataSource, "Files.GroupByFolders");
+		Bindings.AddCheckBoxBinding(FilesGroupByFolders, DataSource, "Files.GroupByFolders");
+		Bindings.AddCheckBoxBinding(FFplayFullscreen, DataSource, "FFplay.Fullscreen");
 
 		// RadioGroup Bindings
 		Bindings.AddRadioGrouxBinding(FFmpegMode, DataSource, "FFmpeg.Mode");
-		Bindings.AddRadioGrouxBinding(MediaPlayerMode, DataSource, "MediaPlayer.Mode");
 
 		// Enabled Bindings
 		Bindings.AddEnabledBinding(FFmpegPath, DataSource, "FFmpeg.Mode", value => (int)value == 2);
 		Bindings.AddEnabledBinding(FFmpegBrowse, DataSource, "FFmpeg.Mode", value => (int)value == 2);
-		Bindings.AddEnabledBinding(MediaPlayerPath, DataSource, "MediaPlayer.Mode", value => (int)value == 2);
-		Bindings.AddEnabledBinding(MediaPlayerBrowse, DataSource, "MediaPlayer.Mode", value => (int)value == 2);
 
 	}
 

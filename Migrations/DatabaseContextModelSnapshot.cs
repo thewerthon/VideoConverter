@@ -83,11 +83,7 @@ namespace VideoConverter.Migrations
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
-                            b1.Property<string>("FFmpegPath")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("FFprobePath")
+                            b1.Property<string>("EncoderPath")
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
@@ -98,8 +94,39 @@ namespace VideoConverter.Migrations
                             b1.Property<int>("Mode")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<string>("PlayerPath")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("ProbePath")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
                             b1.Property<int>("Threads")
                                 .HasColumnType("INTEGER");
+
+                            b1.HasKey("SettingsId");
+
+                            b1.ToTable("Settings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingsId");
+                        });
+
+                    b.OwnsOne("VideoConverter.Models.Settings_FFplay", "FFplay", b1 =>
+                        {
+                            b1.Property<int>("SettingsId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<bool>("Fullscreen")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Volume")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("WindowSize")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
 
                             b1.HasKey("SettingsId");
 
@@ -125,37 +152,13 @@ namespace VideoConverter.Migrations
                                 .HasForeignKey("SettingsId");
                         });
 
-                    b.OwnsOne("VideoConverter.Models.Settings_MediaPlayer", "MediaPlayer", b1 =>
-                        {
-                            b1.Property<int>("SettingsId")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<string>("CustomPath")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<string>("MediaPlayerPath")
-                                .IsRequired()
-                                .HasColumnType("TEXT");
-
-                            b1.Property<int>("Mode")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("SettingsId");
-
-                            b1.ToTable("Settings");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SettingsId");
-                        });
-
                     b.Navigation("FFmpeg")
                         .IsRequired();
 
-                    b.Navigation("Files")
+                    b.Navigation("FFplay")
                         .IsRequired();
 
-                    b.Navigation("MediaPlayer")
+                    b.Navigation("Files")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

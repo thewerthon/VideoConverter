@@ -10,8 +10,8 @@ using VideoConverter.Database;
 namespace VideoConverter.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20241119193105_v0.0.1")]
-    partial class v001
+    [Migration("20241128132358_Temp")]
+    partial class Temp
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,6 +82,14 @@ namespace VideoConverter.Migrations
                             b1.Property<int>("SettingsId")
                                 .HasColumnType("INTEGER");
 
+                            b1.Property<string>("CustomPath")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("EncoderPath")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
                             b1.Property<string>("LogLevel")
                                 .IsRequired()
                                 .HasColumnType("TEXT");
@@ -89,12 +97,39 @@ namespace VideoConverter.Migrations
                             b1.Property<int>("Mode")
                                 .HasColumnType("INTEGER");
 
-                            b1.Property<string>("Path")
+                            b1.Property<string>("PlayerPath")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("ProbePath")
                                 .IsRequired()
                                 .HasColumnType("TEXT");
 
                             b1.Property<int>("Threads")
                                 .HasColumnType("INTEGER");
+
+                            b1.HasKey("SettingsId");
+
+                            b1.ToTable("Settings");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingsId");
+                        });
+
+                    b.OwnsOne("VideoConverter.Models.Settings_FFplay", "FFplay", b1 =>
+                        {
+                            b1.Property<int>("SettingsId")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<bool>("Fullscreen")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Volume")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<string>("WindowSize")
+                                .IsRequired()
+                                .HasColumnType("TEXT");
 
                             b1.HasKey("SettingsId");
 
@@ -121,6 +156,9 @@ namespace VideoConverter.Migrations
                         });
 
                     b.Navigation("FFmpeg")
+                        .IsRequired();
+
+                    b.Navigation("FFplay")
                         .IsRequired();
 
                     b.Navigation("Files")

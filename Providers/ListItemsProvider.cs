@@ -22,4 +22,15 @@ public static class ListItemsProvider {
 
 	];
 
+	public static List<ListItem<string>> WindowSizes { get; } = [
+
+		new ListItem<string> { Key = "160x120", Name = "Tiny" },
+		new ListItem<string> { Key = "320x240", Name = "Mini" },
+		new ListItem<string> { Key = "480x360", Name = "Small" },
+		new ListItem<string> { Key = "640x480", Name = "Medium" },
+		new ListItem<string> { Key = "800x600", Name = "Large" },
+		new ListItem<string> { Key = "960x720", Name = "Bigger" },
+
+	];
+
 }

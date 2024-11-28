@@ -6,6 +6,7 @@ public static class FileItemsProvider {
 	private static readonly DatabaseContext Database = DatabaseProvider.DatabaseContext;
 
 	public static List<FileItem> FileItems { get; set; } = [];
+	public static ListView ListView { get; set; } = null!;
 	public static long FilesAdded { get; private set; } = 0;
 	public static long FilesRemoved { get; private set; } = 0;
 
@@ -167,6 +168,30 @@ public static class FileItemsProvider {
 	public static string[] AllowedExtensions() {
 
 		return Settings.Extensions.Split(" ");
+
+	}
+
+	public static void OnSelectedIndexChanged(object? sender, EventArgs e) {
+
+		if (sender is ListView listView) {
+
+			var selectedPaths = listView.SelectedItems
+			 .Cast<ListViewItem>()
+			 .Select(item => item.Tag?.ToString())
+			 .Where(path => !string.IsNullOrEmpty(path))
+			 .ToHashSet();
+
+			foreach (var fileItem in FileItems) {
+				fileItem.Selected = selectedPaths.Contains(fileItem.Path);
+			}
+
+		}
+
+	}
+
+	public static void PlaySelected() {
+
+		MessageBox.Show(ListView.SelectedItems.Count.ToString());
 
 	}
 

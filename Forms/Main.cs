@@ -8,17 +8,20 @@ public partial class Main : Form {
 
 		InitializeComponent();
 
+		FileItemsProvider.ListView = ListView;
 		FileItemsProvider.FileItemsLoaded += ListItems_Load;
 		FileItemsProvider.FileItemsCleared += ListItems_Clear;
 		FileItemsProvider.FileItemAdded += ListItems_Add;
 		FileItemsProvider.FileItemRemoved += ListItems_Remove;
 		FileItemsProvider.LoadFromDatabase();
 
+		ListView.SelectedIndexChanged += FileItemsProvider.OnSelectedIndexChanged;
+
 	}
 
-	private void ContextMenuPlay_Click(object sender, EventArgs e) {
+	private void ListView_SelectedIndexChanged(object sender, EventArgs e) {
 
-		//var path = ListView.SelectedItems[0].Tag?.ToString() ?? string.Empty;
+		//ListView.SelectedIndexChanged
 
 	}
 

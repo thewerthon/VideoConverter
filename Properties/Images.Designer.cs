@@ -183,6 +183,26 @@ namespace VideoConverter.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_folder_16 {
+            get {
+                object obj = ResourceManager.GetObject("icon-folder-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_folder_24 {
+            get {
+                object obj = ResourceManager.GetObject("icon-folder-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_form_16 {
             get {
                 object obj = ResourceManager.GetObject("icon-form-16", resourceCulture);
@@ -316,6 +336,26 @@ namespace VideoConverter.Properties {
         internal static System.Drawing.Bitmap icon_slider_24 {
             get {
                 object obj = ResourceManager.GetObject("icon-slider-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_start_16 {
+            get {
+                object obj = ResourceManager.GetObject("icon-start-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_start_24 {
+            get {
+                object obj = ResourceManager.GetObject("icon-start-24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

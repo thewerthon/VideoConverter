@@ -21,8 +21,7 @@ namespace VideoConverter.Migrations
                     BaseName = table.Column<string>(type: "TEXT", nullable: false),
                     BasePath = table.Column<string>(type: "TEXT", nullable: false),
                     Extension = table.Column<string>(type: "TEXT", nullable: false),
-                    Size = table.Column<long>(type: "INTEGER", nullable: false),
-                    Progress = table.Column<float>(type: "REAL", nullable: false)
+                    Size = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,11 +32,9 @@ namespace VideoConverter.Migrations
                 name: "Settings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
                     Language = table.Column<string>(type: "TEXT", nullable: false),
                     Extensions = table.Column<string>(type: "TEXT", nullable: false),
-                    Files_GroupByFolders = table.Column<bool>(type: "INTEGER", nullable: false),
                     FFmpeg_Mode = table.Column<int>(type: "INTEGER", nullable: false),
                     FFmpeg_Path = table.Column<string>(type: "TEXT", nullable: false),
                     FFmpeg_LogLevel = table.Column<string>(type: "TEXT", nullable: false),
