@@ -1,158 +1,48 @@
 ﻿namespace VideoConverter.Providers;
 
-public static class FileItemsProvider {
+public class FileItemsProvider : ListViewHandler<FileItem> {
 
 	private static readonly Settings Settings = SettingsProvider.Current;
 	private static readonly DatabaseContext Database = DatabaseProvider.DatabaseContext;
 
-	public static List<FileItem> FileItems { get; set; } = [];
-	public static ListView ListView { get; set; } = null!;
-	public static long FilesAdded { get; private set; } = 0;
-	public static long FilesRemoved { get; private set; } = 0;
+	public FileItemsProvider(ListView listView) : base(listView) {
 
-	public static event Action? FileItemsLoaded;
-	public static event Action? FileItemsSynced;
-	public static event Action? FileItemsCleared;
-	public static event Action<FileItem>? FileItemAdded;
-	public static event Action<FileItem>? FileItemRemoved;
-
-	public static void LoadFromDatabase() {
-
-		FileItems = [.. Database.FileItems];
-		FileItemsLoaded?.Invoke();
+		ListItemAdded += (item) => SaveToDatabase();
+		ListItemUpdated += (item) => SaveToDatabase();
+		ListItemRemoved += (item) => SaveToDatabase();
+		ListItemsAdded += (items) => SaveToDatabase();
+		ListItemsUpdated += (items) => SaveToDatabase();
+		ListItemsRemoved += (items) => SaveToDatabase();
+		ListItemsCleared += SaveToDatabase;
 
 	}
 
-	public static void SyncWithDatabase() {
+	public void LoadFromDatabase() {
 
-		var dbItems = Database.FileItems.ToList();
+		Load([.. Database.FileItems]);
 
-		var itemsToAdd = FileItems.Where(item => !dbItems.Any(dbItem => dbItem.Path == item.Path)).ToList();
-		var itemsToUpdate = FileItems.Where(item => dbItems.Any(dbItem => dbItem.Path == item.Path)).ToList();
-		var itemsToRemove = dbItems.Where(dbItem => !FileItems.Any(file => file.Path == dbItem.Path)).ToList();
+	}
 
-		if (itemsToAdd.Count > 0) Database.FileItems.AddRange(itemsToAdd);
-		if (itemsToUpdate.Count > 0) Database.FileItems.UpdateRange(itemsToUpdate);
-		if (itemsToRemove.Count > 0) Database.FileItems.RemoveRange(itemsToRemove);
+	public void SaveToDatabase() {
+
+		var items = Database.FileItems.ToList();
+
+		var add = ListItems.Where(item => !items.Any(dbItem => dbItem.Path == item.Path)).ToList();
+		var update = ListItems.Where(item => items.Any(dbItem => dbItem.Path == item.Path)).ToList();
+		var remove = items.Where(dbItem => !ListItems.Any(file => file.Path == dbItem.Path)).ToList();
+
+		if (add.Count > 0) Database.FileItems.AddRange(add);
+		if (update.Count > 0) Database.FileItems.UpdateRange(update);
+		if (remove.Count > 0) Database.FileItems.RemoveRange(remove);
 
 		Database.SaveChanges();
 		Database.ChangeTracker.Clear();
-		FileItemsSynced?.Invoke();
 
 	}
 
-	public static void ClearFiles() {
+	public static string[] AllowedExtensions() {
 
-		FileItems.Clear();
-		FileItemsCleared?.Invoke();
-
-		SyncWithDatabase();
-
-	}
-
-	public static void AddFiles(string[] paths) {
-
-		FilesAdded = 0;
-
-		foreach (var path in paths) {
-
-			if (File.Exists(path)) {
-
-				if (FileAllowed(path)) {
-
-					if (!FileItems.Any(i => i.Path == path)) {
-
-						var file = new FileItem(path);
-
-						FilesAdded++;
-						FileItems.Add(file);
-						FileItemAdded?.Invoke(file);
-
-					}
-
-				}
-
-			}
-
-		}
-
-		if (FilesAdded > 0) SyncWithDatabase();
-
-	}
-
-	public static void AddFolders(string[] paths, bool recurse = false) {
-
-		FilesAdded = 0;
-
-		foreach (var path in paths) {
-
-			if (Directory.Exists(path)) {
-
-				var filePaths = Directory.GetFiles(path, "*.*", recurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly);
-
-				foreach (var filePath in filePaths) {
-
-					if (FileAllowed(filePath)) {
-
-						if (!FileItems.Any(i => i.Path == filePath)) {
-
-							var file = new FileItem(filePath);
-
-							FilesAdded++;
-							FileItems.Add(file);
-							FileItemAdded?.Invoke(file);
-
-						}
-
-					}
-
-				}
-
-			}
-
-		}
-
-		if (FilesAdded > 0) SyncWithDatabase();
-
-	}
-
-	public static void RemoveFile(string path) {
-
-		FilesRemoved = 0;
-
-		var file = FileItems.FirstOrDefault(i => i.Path == path);
-
-		if (file != null) {
-
-			FilesRemoved++;
-			FileItems.Remove(file);
-			FileItemRemoved?.Invoke(file);
-
-		}
-
-		if (FilesRemoved > 0) SyncWithDatabase();
-
-	}
-
-	public static void RemoveFiles(string[] paths) {
-
-		FilesRemoved = 0;
-
-		foreach (var path in paths) {
-
-			var file = FileItems.FirstOrDefault(i => i.Path == path);
-
-			if (file != null) {
-
-				FilesRemoved++;
-				FileItems.Remove(file);
-				FileItemRemoved?.Invoke(file);
-
-			}
-
-		}
-
-		if (FilesRemoved > 0) SyncWithDatabase();
+		return Settings.Extensions.Split(" ");
 
 	}
 
@@ -165,33 +55,66 @@ public static class FileItemsProvider {
 
 	}
 
-	public static string[] AllowedExtensions() {
+	public void AddFiles(string[] paths) {
 
-		return Settings.Extensions.Split(" ");
+		var files = new List<FileItem>();
 
-	}
+		foreach (var path in paths) {
 
-	public static void OnSelectedIndexChanged(object? sender, EventArgs e) {
+			if (File.Exists(path) && FileAllowed(path)) {
 
-		if (sender is ListView listView) {
+				if (!ListItems.Any(i => i.Path == path)) {
 
-			var selectedPaths = listView.SelectedItems
-			 .Cast<ListViewItem>()
-			 .Select(item => item.Tag?.ToString())
-			 .Where(path => !string.IsNullOrEmpty(path))
-			 .ToHashSet();
+					var item = new FileItem(path);
+					files.Add(item);
 
-			foreach (var fileItem in FileItems) {
-				fileItem.Selected = selectedPaths.Contains(fileItem.Path);
+				}
+
 			}
 
 		}
 
+		if (files.Count > 0) Add(files);
+
 	}
 
-	public static void PlaySelected() {
+	public void AddFolders(string[] paths, bool recurse = false) {
 
-		MessageBox.Show(ListView.SelectedItems.Count.ToString());
+		var files = new List<FileItem>();
+
+		foreach (var path in paths) {
+
+			if (Directory.Exists(path)) {
+
+				var recursive = recurse ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+				var filepaths = Directory.GetFiles(path, "*.*", recursive);
+
+				foreach (var filepath in filepaths) {
+
+					if (File.Exists(filepath) && FileAllowed(filepath)) {
+
+						if (!ListItems.Any(i => i.Path == filepath)) {
+
+							var item = new FileItem(filepath);
+							files.Add(item);
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		if (files.Count > 0) Add(files);
+
+	}
+
+	public void Play() {
+
+		MessageBox.Show(SelectedItems.Count.ToString());
 
 	}
 

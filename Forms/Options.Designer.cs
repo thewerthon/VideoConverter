@@ -36,9 +36,6 @@ partial class Options {
 		flowLayoutPanel3 = new FlowLayoutPanel();
 		label2 = new Label();
 		Extensions = new TextBox();
-		groupBox5 = new GroupBox();
-		flowLayoutPanel8 = new FlowLayoutPanel();
-		FilesGroupByFolders = new CheckBox();
 		Options_FFmpeg = new TabPage();
 		flowLayoutPanel4 = new FlowLayoutPanel();
 		FFmpegMode = new RadioGroup();
@@ -81,8 +78,6 @@ partial class Options {
 		flowLayoutPanel2.SuspendLayout();
 		groupBox2.SuspendLayout();
 		flowLayoutPanel3.SuspendLayout();
-		groupBox5.SuspendLayout();
-		flowLayoutPanel8.SuspendLayout();
 		Options_FFmpeg.SuspendLayout();
 		flowLayoutPanel4.SuspendLayout();
 		FFmpegMode.SuspendLayout();
@@ -128,7 +123,6 @@ partial class Options {
 		// 
 		flowLayoutPanel1.Controls.Add(groupBox1);
 		flowLayoutPanel1.Controls.Add(groupBox2);
-		flowLayoutPanel1.Controls.Add(groupBox5);
 		flowLayoutPanel1.Dock = DockStyle.Fill;
 		flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
 		flowLayoutPanel1.Location = new Point(3, 3);
@@ -225,56 +219,18 @@ partial class Options {
 		label2.Margin = new Padding(3);
 		label2.MinimumSize = new Size(30, 23);
 		label2.Name = "label2";
-		label2.Size = new Size(112, 23);
+		label2.Size = new Size(111, 23);
 		label2.TabIndex = 2;
 		label2.Text = "Allowed Extensions:";
 		label2.TextAlign = ContentAlignment.MiddleLeft;
 		// 
 		// Extensions
 		// 
-		Extensions.Location = new Point(121, 3);
+		Extensions.Location = new Point(120, 3);
 		Extensions.MinimumSize = new Size(30, 23);
 		Extensions.Name = "Extensions";
 		Extensions.Size = new Size(395, 23);
 		Extensions.TabIndex = 1;
-		// 
-		// groupBox5
-		// 
-		groupBox5.AutoSize = true;
-		groupBox5.Controls.Add(flowLayoutPanel8);
-		groupBox5.Dock = DockStyle.Top;
-		groupBox5.Location = new Point(6, 156);
-		groupBox5.Margin = new Padding(6);
-		groupBox5.MinimumSize = new Size(0, 50);
-		groupBox5.Name = "groupBox5";
-		groupBox5.Padding = new Padding(6, 6, 6, 12);
-		groupBox5.Size = new Size(534, 63);
-		groupBox5.TabIndex = 2;
-		groupBox5.TabStop = false;
-		groupBox5.Text = "List View";
-		// 
-		// flowLayoutPanel8
-		// 
-		flowLayoutPanel8.AutoSize = true;
-		flowLayoutPanel8.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-		flowLayoutPanel8.Controls.Add(FilesGroupByFolders);
-		flowLayoutPanel8.Dock = DockStyle.Fill;
-		flowLayoutPanel8.Location = new Point(6, 22);
-		flowLayoutPanel8.MinimumSize = new Size(0, 28);
-		flowLayoutPanel8.Name = "flowLayoutPanel8";
-		flowLayoutPanel8.Size = new Size(522, 29);
-		flowLayoutPanel8.TabIndex = 1;
-		// 
-		// FilesGroupByFolders
-		// 
-		FilesGroupByFolders.AutoSize = true;
-		FilesGroupByFolders.Location = new Point(3, 3);
-		FilesGroupByFolders.MinimumSize = new Size(30, 23);
-		FilesGroupByFolders.Name = "FilesGroupByFolders";
-		FilesGroupByFolders.Size = new Size(133, 23);
-		FilesGroupByFolders.TabIndex = 0;
-		FilesGroupByFolders.Text = "Group files by folder";
-		FilesGroupByFolders.UseVisualStyleBackColor = true;
 		// 
 		// Options_FFmpeg
 		// 
@@ -443,7 +399,7 @@ partial class Options {
 		label4.Location = new Point(3, 3);
 		label4.MinimumSize = new Size(30, 23);
 		label4.Name = "label4";
-		label4.Size = new Size(51, 23);
+		label4.Size = new Size(52, 23);
 		label4.TabIndex = 2;
 		label4.Text = "Threads:";
 		label4.TextAlign = ContentAlignment.MiddleLeft;
@@ -451,7 +407,7 @@ partial class Options {
 		// FFmpegThreads
 		// 
 		FFmpegThreads.AutoSize = true;
-		FFmpegThreads.Location = new Point(60, 3);
+		FFmpegThreads.Location = new Point(61, 3);
 		FFmpegThreads.Maximum = new decimal(new int[] { 64, 0, 0, 0 });
 		FFmpegThreads.MinimumSize = new Size(30, 0);
 		FFmpegThreads.Name = "FFmpegThreads";
@@ -463,7 +419,7 @@ partial class Options {
 		// 
 		label5.Anchor = AnchorStyles.Left;
 		label5.AutoSize = true;
-		label5.Location = new Point(101, 3);
+		label5.Location = new Point(102, 3);
 		label5.MinimumSize = new Size(30, 23);
 		label5.Name = "label5";
 		label5.Size = new Size(185, 23);
@@ -670,7 +626,7 @@ partial class Options {
 		label1.Location = new Point(106, 3);
 		label1.MinimumSize = new Size(30, 23);
 		label1.Name = "label1";
-		label1.Size = new Size(178, 23);
+		label1.Size = new Size(177, 23);
 		label1.TabIndex = 5;
 		label1.Text = "between 0 (mute) and 100 (max)";
 		label1.TextAlign = ContentAlignment.MiddleLeft;
@@ -733,10 +689,6 @@ partial class Options {
 		groupBox2.PerformLayout();
 		flowLayoutPanel3.ResumeLayout(false);
 		flowLayoutPanel3.PerformLayout();
-		groupBox5.ResumeLayout(false);
-		groupBox5.PerformLayout();
-		flowLayoutPanel8.ResumeLayout(false);
-		flowLayoutPanel8.PerformLayout();
 		Options_FFmpeg.ResumeLayout(false);
 		flowLayoutPanel4.ResumeLayout(false);
 		flowLayoutPanel4.PerformLayout();
@@ -805,9 +757,6 @@ partial class Options {
 	private ComboBox FFmpegLogLevel;
 	private BindingSource DataSource;
 	private FolderBrowserDialog FolderBrowser;
-	private GroupBox groupBox5;
-	private FlowLayoutPanel flowLayoutPanel8;
-	private CheckBox FilesGroupByFolders;
 	private TabPage tabPage1;
 	private FlowLayoutPanel flowLayoutPanel9;
 	private GroupBox groupBox7;

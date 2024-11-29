@@ -23,23 +23,7 @@ public partial class Main : Form {
 
 	private void ContextMenuPlay_Click(object sender, EventArgs e) {
 
-		FileItemsProvider.PlaySelected();
-		return;
-
-		var items = ListView.SelectedItems;
-		if (items.Count == 0) return;
-
-		if (items.Count > 1 && MessageBox.Show($"Do you want to play {items.Count} files in sequence?", "Play Files", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) return;
-
-		foreach (ListViewItem item in items) {
-
-			if (item.Tag is string path && !string.IsNullOrEmpty(path)) {
-
-				FFplayProvider.Play(path);
-
-			}
-
-		}
+		FileItems.Play();
 
 	}
 

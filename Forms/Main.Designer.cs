@@ -57,7 +57,6 @@ partial class Main {
 		StopProcess = new ToolStripButton();
 		panel2 = new Panel();
 		ListView = new ListView();
-		ColumnNr = new ColumnHeader();
 		ColumnName = new ColumnHeader();
 		ColumnLocation = new ColumnHeader();
 		ColumnSize = new ColumnHeader();
@@ -335,7 +334,7 @@ partial class Main {
 		// 
 		ListView.AllowDrop = true;
 		ListView.BorderStyle = BorderStyle.None;
-		ListView.Columns.AddRange(new ColumnHeader[] { ColumnNr, ColumnName, ColumnLocation, ColumnSize, ColumnProgress });
+		ListView.Columns.AddRange(new ColumnHeader[] { ColumnName, ColumnLocation, ColumnSize, ColumnProgress });
 		ListView.ContextMenuStrip = ContextMenu;
 		ListView.Dock = DockStyle.Fill;
 		ListView.FullRowSelect = true;
@@ -349,15 +348,9 @@ partial class Main {
 		ListView.UseCompatibleStateImageBehavior = false;
 		ListView.View = View.Details;
 		ListView.ColumnClick += ListView_ColumnClick;
-		ListView.SelectedIndexChanged += ListView_SelectedIndexChanged;
 		ListView.DragDrop += ListView_DragDrop;
 		ListView.DragEnter += ListView_DragEnter;
 		ListView.KeyDown += ListView_KeyDown;
-		// 
-		// ColumnNr
-		// 
-		ColumnNr.Text = " Nr.";
-		ColumnNr.Width = 40;
 		// 
 		// ColumnName
 		// 
@@ -369,7 +362,7 @@ partial class Main {
 		// 
 		ColumnLocation.Tag = "Location";
 		ColumnLocation.Text = "Location";
-		ColumnLocation.Width = 230;
+		ColumnLocation.Width = 270;
 		// 
 		// ColumnSize
 		// 
@@ -510,7 +503,6 @@ partial class Main {
 	private ColumnHeader ColumnSize;
 	private OpenFileDialog AddFilesDialog;
 	private FolderBrowserDialog AddFolderDialog;
-	private ColumnHeader ColumnNr;
 	private ColumnHeader ColumnProgress;
 	private ContextMenuStrip ContextMenu;
 	private ToolStripMenuItem ContextMenuPlay;

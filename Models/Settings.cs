@@ -11,7 +11,6 @@ public class Settings {
 	public string Extensions { get; set; } = ".avi .mkv .mov .mp4 .mpeg .mpg .ts .vob .webm .wmv";
 
 	// Complexes
-	public Settings_Files Files { get; set; } = new();
 	public Settings_FFmpeg FFmpeg { get; set; } = new();
 	public Settings_FFplay FFplay { get; set; } = new();
 
@@ -57,12 +56,6 @@ public class Settings {
 		Database.SaveChanges();
 
 	}
-
-}
-
-public class Settings_Files {
-
-	public bool GroupByFolders { get; set; } = false;
 
 }
 

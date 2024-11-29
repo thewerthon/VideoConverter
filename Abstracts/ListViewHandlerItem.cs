@@ -2,14 +2,14 @@
 
 public class ListViewHandlerItem : IListViewHandlerItem {
 
-	public int Id { get; set; }
+	public string Key { get; set; } = string.Empty;
 
 	public ListViewItem ToListViewItem() {
 
 		return new ListViewItem {
 
 			Text = ToString(),
-			Tag = Id
+			Tag = Key
 
 		};
 

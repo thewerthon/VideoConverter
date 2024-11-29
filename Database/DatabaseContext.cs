@@ -18,7 +18,6 @@ public class DatabaseContext : DbContext {
 	protected override void OnModelCreating(ModelBuilder model) {
 
 		base.OnModelCreating(model);
-		model.Entity<Settings>().OwnsOne(s => s.Files);
 		model.Entity<Settings>().OwnsOne(s => s.FFmpeg);
 		model.Entity<Settings>().OwnsOne(s => s.FFplay);
 

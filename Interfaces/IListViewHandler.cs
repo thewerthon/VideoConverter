@@ -1,28 +1,32 @@
 ﻿namespace VideoConverter.Interfaces;
 
-public interface IListViewHandler {
+public interface IListViewHandler<T> where T : IListViewHandlerItem {
 
 	public ListView ListView { get; set; }
-	public List<IListViewHandlerItem> ListItems { get; set; }
-	public List<IListViewHandlerItem> SelectedItems { get; set; }
+	public List<T> ListItems { get; set; }
+	public List<T> SelectedItems { get; set; }
 
-	public event Action? ListItemsLoaded;
+	public event Action<T>? ListItemAdded;
+	public event Action<T>? ListItemUpdated;
+	public event Action<T>? ListItemRemoved;
+	public event Action<List<T>>? ListItemsAdded;
+	public event Action<List<T>>? ListItemsUpdated;
+	public event Action<List<T>>? ListItemsRemoved;
+	public event Action<List<T>>? ListItemsLoaded;
+	public event Action? ListItemsRefreshed;
 	public event Action? ListItemsCleared;
-	public event Action<IListViewHandlerItem>? ListItemAdded;
-	public event Action<IListViewHandlerItem>? ListItemUpdated;
-	public event Action<IListViewHandlerItem>? ListItemRemoved;
 
-	public void Load();
-	public void Clear();
+	public void Add(T item);
+	public void Add(List<T> items);
+	public void Update(T item);
+	public void Update(string key, T item);
+	public void Update(List<T> items);
+	public void Remove();
+	public void Remove(T item);
+	public void Remove(string key);
+	public void Remove(List<T> items);
+	public void Load(List<T> items);
 	public void Refresh();
-
-	public void Add(IListViewHandlerItem item);
-	public void Add(List<IListViewHandlerItem> items);
-	public void Update(IListViewHandlerItem item);
-	public void Update(List<IListViewHandlerItem> items);
-	public void Remove(IListViewHandlerItem item);
-	public void Remove(List<IListViewHandlerItem> items);
-
-	public void SelectionChanged(object? sender, EventArgs e);
+	public void Clear();
 
 }

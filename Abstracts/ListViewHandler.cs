@@ -1,92 +1,205 @@
 ﻿namespace VideoConverter.Abstracts;
 
-public abstract class ListViewHandler : IListViewHandler {
+public abstract class ListViewHandler<T> : IListViewHandler<T> where T : IListViewHandlerItem {
 
-	public ListView ListView { get; set; } = null!;
-	public List<IListViewHandlerItem> ListItems { get; set; } = [];
-	public List<IListViewHandlerItem> SelectedItems { get; set; } = [];
+	public ListView ListView { get; set; }
+	public List<T> ListItems { get; set; } = [];
+	public List<T> SelectedItems { get; set; } = [];
+	protected bool NoEvents { get; set; } = false;
 
-	public event Action<IListViewHandlerItem>? ListItemAdded;
-	public event Action<IListViewHandlerItem>? ListItemUpdated;
-	public event Action<IListViewHandlerItem>? ListItemRemoved;
-	public event Action? ListItemsLoaded;
+	public event Action<T>? ListItemAdded;
+	public event Action<T>? ListItemUpdated;
+	public event Action<T>? ListItemRemoved;
+	public event Action<List<T>>? ListItemsAdded;
+	public event Action<List<T>>? ListItemsUpdated;
+	public event Action<List<T>>? ListItemsRemoved;
+	public event Action<List<T>>? ListItemsLoaded;
+	public event Action? ListItemsRefreshed;
 	public event Action? ListItemsCleared;
 
-	public void Load() {
+	public ListViewHandler(ListView listview) {
 
-		ListItems = [];
-		ListView.Clear();
-		ListItemsLoaded?.Invoke();
+		ListView = listview;
+		ListView.SelectedIndexChanged += SelectionChanged;
 
 	}
 
-	public void Clear() {
+	public void Add(T item) {
 
-		ListItems = [];
-		ListView.Clear();
-		ListItemsCleared?.Invoke();
+		ListItems.Add(item);
+		ListView.Items.Add(item.ToListViewItem());
+		//if (!NoEvents) ListItemAdded?.Invoke(item);
+
+	}
+
+	public void Add(List<T> items) {
+
+		PerformLongOperation(() => {
+
+			foreach (var item in items) Add(item);
+			ListItemsAdded?.Invoke(items);
+
+		});
+
+	}
+
+	public void Update(T item) {
+
+		Update(item.Key, item);
+
+	}
+
+	public void Update(string key, T item) {
+
+		var listitem = GetListItem(i => i.Key.Equals(key));
+		var viewitem = GetListViewItem(i => i.Tag != null && i.Tag.Equals(key));
+		if (listitem is null || viewitem is null) return;
+
+		item.Key = key;
+		listitem = item;
+		viewitem = item.ToListViewItem();
+		if (!NoEvents) ListItemUpdated?.Invoke(item);
+
+	}
+
+	public void Update(List<T> items) {
+
+		PerformLongOperation(() => {
+
+			foreach (var item in items) Update(item.Key, item);
+			ListItemsUpdated?.Invoke(items);
+
+		});
+
+	}
+
+	public void Remove() {
+
+		Remove(SelectedItems);
+
+	}
+
+	public void Remove(T item) {
+
+		Remove(item.Key);
+
+	}
+
+	public void Remove(string key) {
+
+		var listitem = GetListItem(i => i.Key.Equals(key));
+		var viewitem = GetListViewItem(i => i.Tag != null && i.Tag.Equals(key));
+		if (listitem is null || viewitem is null) return;
+
+		ListItems.Remove(listitem);
+		ListView.Items.Remove(viewitem);
+		if (!NoEvents) ListItemRemoved?.Invoke(listitem);
+
+	}
+
+	public void Remove(List<T> items) {
+
+		var i = new List<T>(items);
+
+		PerformLongOperation(() => {
+
+			foreach (var item in i) Remove(item.Key);
+			ListItemsRemoved?.Invoke(i);
+
+		});
+
+	}
+
+	public void Load(List<T> items) {
+
+		ListItems.Clear();
+		ListItems.AddRange(items);
+		Refresh();
+
+		ListItemsLoaded?.Invoke(items);
 
 	}
 
 	public void Refresh() {
 
-		ListView.Clear();
+		PerformLongOperation(() => {
 
-		foreach (var item in ListItems) {
+			ListView.Items.Clear();
+			foreach (var item in ListItems) ListView.Items.Add(item.ToListViewItem());
+			ListItemsRefreshed?.Invoke();
 
-			ListView.Items.Add(item.ToListViewItem());
+		});
+
+	}
+
+	public void Clear() {
+
+		PerformLongOperation(() => {
+
+			ListItems = [];
+			ListView.Items.Clear();
+			ListItemsCleared?.Invoke();
+
+		});
+
+	}
+
+	protected void PerformLongOperation(Action action) {
+
+		NoEvents = true;
+		ListView.BeginUpdate();
+		Cursor.Current = Cursors.WaitCursor;
+
+		try {
+
+			action();
+
+		} finally {
+
+			Cursor.Current = Cursors.Default;
+			ListView.EndUpdate();
+			NoEvents = false;
 
 		}
 
 	}
 
-	public void Add(IListViewHandlerItem item) {
+	protected void SelectionChanged(object? sender, EventArgs e) {
 
-		ListItems.Add(item);
-		ListView.Items.Add(item.ToListViewItem());
-		ListItemAdded?.Invoke(item);
+		SelectedItems.Clear();
 
-	}
+		if (ListView.SelectedItems.Count > 0) {
 
-	public void Add(List<IListViewHandlerItem> items) {
-
-		foreach (var item in items) {
-
-			Add(item);
+			var keys = ListView.SelectedItems.Cast<ListViewItem>().Select(item => item.Tag).OfType<string>();
+			var items = ListItems.Where(item => keys.Contains(item.Key)).ToList();
+			SelectedItems.AddRange(items.Cast<T>().ToList());
 
 		}
 
 	}
 
-	public void Update(IListViewHandlerItem item) {
+	protected ListViewItem GetListViewItem(Func<ListViewItem, bool> filter) {
 
-		var i = ListView.Items.Cast<ListViewItem>().FirstOrDefault(i => i.Tag != null && i.Tag.Equals(item.Id));
-		if (i != null) i = item.ToListViewItem();
-		ListItemUpdated?.Invoke(item);
+		return ListView.Items.Cast<ListViewItem>().First(filter);
 
 	}
 
-	public void Update(List<IListViewHandlerItem> items) {
+	protected List<ListViewItem> GetListViewItems(Func<ListViewItem, bool> filter) {
 
-		if (items.Count > 0) {
-
-			//foreach (var i in items) ListItems[ListItems.IndexOf(i)] = item;
-			//ListItemsUpdated?.Invoke(items);
-
-		}
+		return ListView.Items.Cast<ListViewItem>().Where(filter).ToList();
 
 	}
 
-	public void Remove(IListViewHandlerItem item) {
-		throw new NotImplementedException();
+	protected T GetListItem(Func<T, bool> filter) {
+
+		return ListItems.First(filter);
+
 	}
 
-	public void Remove(List<IListViewHandlerItem> items) {
-		throw new NotImplementedException();
-	}
+	protected List<T> GetListItems(Func<T, bool> filter) {
 
-	public void SelectionChanged(object? sender, EventArgs e) {
-		throw new NotImplementedException();
+		return ListItems.Where(filter).ToList();
+
 	}
 
 }

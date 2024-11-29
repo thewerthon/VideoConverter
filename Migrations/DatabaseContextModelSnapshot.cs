@@ -42,9 +42,6 @@ namespace VideoConverter.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<float>("Progress")
-                        .HasColumnType("REAL");
-
                     b.Property<long>("Size")
                         .HasColumnType("INTEGER");
 
@@ -136,29 +133,10 @@ namespace VideoConverter.Migrations
                                 .HasForeignKey("SettingsId");
                         });
 
-                    b.OwnsOne("VideoConverter.Models.Settings_Files", "Files", b1 =>
-                        {
-                            b1.Property<int>("SettingsId")
-                                .HasColumnType("INTEGER");
-
-                            b1.Property<bool>("GroupByFolders")
-                                .HasColumnType("INTEGER");
-
-                            b1.HasKey("SettingsId");
-
-                            b1.ToTable("Settings");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SettingsId");
-                        });
-
                     b.Navigation("FFmpeg")
                         .IsRequired();
 
                     b.Navigation("FFplay")
-                        .IsRequired();
-
-                    b.Navigation("Files")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

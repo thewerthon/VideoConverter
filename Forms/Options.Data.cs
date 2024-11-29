@@ -27,7 +27,6 @@ public partial class Options : Form {
 		Bindings.AddComboBoxBinding(FFplayWindowSize, DataSource, "FFplay.WindowSize");
 
 		// CheckBox Bindings
-		Bindings.AddCheckBoxBinding(FilesGroupByFolders, DataSource, "Files.GroupByFolders");
 		Bindings.AddCheckBoxBinding(FFplayFullscreen, DataSource, "FFplay.Fullscreen");
 
 		// RadioGroup Bindings

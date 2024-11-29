@@ -10,18 +10,22 @@ public class FileItem(string path) : DatabaseRecord, IListViewHandlerItem {
 	public string Extension { get; set; } = System.IO.Path.GetExtension(path).ToLower();
 	public long Size { get; set; } = new System.IO.FileInfo(path).Length;
 
-	// Progress
+	[NotMapped]
+	public string Key { get; set; } = path;
+
+	[NotMapped]
 	public float Progress { get; set; } = 0;
 
-	// List View Item
 	public ListViewItem ToListViewItem() {
 
-		return new ListViewItem() {
+		var item = new ListViewItem { Text = Name, Tag = Key };
 
-			Text = Name,
-			Tag = Id
+		item.SubItems.Add(BasePath);
+		item.SubItems.Add(GetSizeString());
+		item.SubItems.Add(GetProgressString(), GetProgressColor(), item.BackColor, item.Font);
+		item.UseItemStyleForSubItems = false;
 
-		};
+		return item;
 
 	}
 

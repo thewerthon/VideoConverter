@@ -1,5 +1,4 @@
 using System.Globalization;
-
 namespace VideoConverter;
 
 internal static class Program {

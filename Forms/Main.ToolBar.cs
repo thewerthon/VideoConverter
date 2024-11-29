@@ -8,13 +8,7 @@ public partial class Main : Form {
 
 		if (AddFilesDialog.ShowDialog() == DialogResult.OK) {
 
-			PerformLongOperation(() => {
-
-				FileItemsProvider.AddFiles(AddFilesDialog.FileNames);
-
-			});
-
-			if (FileItemsProvider.FilesAdded == 0) MessageBox.Show("No files were added.", "Add Files", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			FileItems.AddFiles(AddFilesDialog.FileNames);
 
 		}
 
@@ -35,13 +29,7 @@ public partial class Main : Form {
 
 			}
 
-			PerformLongOperation(() => {
-
-				FileItemsProvider.AddFolders([location], recurse);
-
-			});
-
-			if (FileItemsProvider.FilesAdded == 0) MessageBox.Show("No valid files were found.", "Add Folder", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			FileItems.AddFolders([location], recurse);
 
 		}
 
@@ -49,7 +37,7 @@ public partial class Main : Form {
 
 	private void ClearFiles_Click(object sender, EventArgs e) {
 
-		PerformLongOperation(FileItemsProvider.ClearFiles);
+		FileItems.Clear();
 
 	}
 
